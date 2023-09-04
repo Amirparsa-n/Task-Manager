@@ -1,0 +1,99 @@
+@font-face {
+    font-family: 'Mazzard H';
+    src: url('/assets/fonts/MazzardH-Black.eot');
+    src: local('Mazzard H Black'), local('MazzardH-Black'),
+        url('/assets/fonts/MazzardH-Black.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/MazzardH-Black.woff2') format('woff2'),
+        url('/assets/fonts/MazzardH-Black.woff') format('woff'),
+        url('/assets/fonts/MazzardH-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url('/assets/fonts/MazzardH-Medium.eot');
+    src: local('Mazzard H Medium'), local('MazzardH-Medium'),
+        url('/assets/fonts/MazzardH-Medium.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/MazzardH-Medium.woff2') format('woff2'),
+        url('/assets/fonts/MazzardH-Medium.woff') format('woff'),
+        url('/assets/fonts/MazzardH-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url('/assets/fonts/MazzardH-Light.eot');
+    src: local('Mazzard H Light'), local('MazzardH-Light'),
+        url('/assets/fonts/MazzardH-Light.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/MazzardH-Light.woff2') format('woff2'),
+        url('/assets/fonts/MazzardH-Light.woff') format('woff'),
+        url('/assets/fonts/MazzardH-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url('/assets/fonts/MazzardH-Thin.eot');
+    src: local('Mazzard H Thin'), local('MazzardH-Thin'),
+        url('/assets/fonts/MazzardH-Thin.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/MazzardH-Thin.woff2') format('woff2'),
+        url('/assets/fonts/MazzardH-Thin.woff') format('woff'),
+        url('/assets/fonts/MazzardH-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url('/assets/fonts/MazzardH-Bold.eot');
+    src: local('Mazzard H Bold'), local('MazzardH-Bold'),
+        url('/assets/fonts/MazzardH-Bold.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/MazzardH-Bold.woff2') format('woff2'),
+        url('/assets/fonts/MazzardH-Bold.woff') format('woff'),
+        url('/assets/fonts/MazzardH-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url('/assets/fonts/MazzardH-Regular.eot');
+    src: local('Mazzard H Regular'), local('MazzardH-Regular'),
+        url('/assets/fonts/MazzardH-Regular.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/MazzardH-Regular.woff2') format('woff2'),
+        url('/assets/fonts/MazzardH-Regular.woff') format('woff'),
+        url('/assets/fonts/MazzardH-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url('/assets/fonts/MazzardH-SemiBold.eot');
+    src: local('Mazzard H SemiBold'), local('MazzardH-SemiBold'),
+        url('/assets/fonts/MazzardH-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/MazzardH-SemiBold.woff2') format('woff2'),
+        url('/assets/fonts/MazzardH-SemiBold.woff') format('woff'),
+        url('/assets/fonts/MazzardH-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Mazzard H';
+    src: url('/assets/fonts/MazzardH-ExtraBold.eot');
+    src: local('Mazzard H ExtraBold'), local('MazzardH-ExtraBold'),
+        url('/assets/fonts/MazzardH-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/MazzardH-ExtraBold.woff2') format('woff2'),
+        url('/assets/fonts/MazzardH-ExtraBold.woff') format('woff'),
+        url('/assets/fonts/MazzardH-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
