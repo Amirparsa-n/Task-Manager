@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  // darkMode: 'media',
   darkMode: 'class',
+
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -27,6 +29,8 @@ module.exports = {
     extend: {
       colors: {
         primary: '#3E7BFA',
+        bgDark: '#1C1C28',
+        DarkSecond: '#21222C',
       },
 
       boxShadow: {
