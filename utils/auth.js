@@ -1,8 +1,13 @@
-import { hash } from "bcryptjs";
+import { compare, hash } from "bcryptjs";
 
 const hashPassword = async (password) => {
     const hashedPassword = await hash(password, 8);
     return hashedPassword;
 };
 
-export { hashPassword };
+const verifyPassword = async (password, hashedPassword) => {
+    const isValid = await compare(password, hashedPassword);
+    return isValid;
+};
+
+export { hashPassword, verifyPassword };
