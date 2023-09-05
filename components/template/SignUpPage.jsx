@@ -2,27 +2,35 @@ import Image from "next/image";
 import { useState } from "react";
 import FormAuth from "../module/FormAuth";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const SignUpPage = () => {
+    const router = useRouter();
+
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
     const [message, setMessage] = useState("");
-    const [signUpLoading, setSignUpLoading] = useState(false)
+    const [signUpLoading, setSignUpLoading] = useState(false);
 
     const signUpHandler = async (e) => {
         e.preventDefault();
-        setSignUpLoading(true)
+        setSignUpLoading(true);
+        setMessage("")
 
-        const res = await fetch('/api/auth/signup', {
-            method: 'POST',
+        const res = await fetch("/api/auth/signup", {
+            method: "POST",
             body: JSON.stringify({ email, password }),
-            headers: { 'Content-Type': 'application/json' },
-        })
+            headers: { "Content-Type": "application/json" },
+        });
         const data = await res.json();
-        setMessage(data)
-        console.log(data);
-    }
+        setMessage(data);
+        if (data.status === "success") {
+            router.replace("/signin");
+        } else {
+            setSignUpLoading(false);
+        }
+    };
 
     return (
         <div className="container h-screen w-screen flex items-center justify-center -mt-6 md:mt-0">
@@ -58,20 +66,33 @@ const SignUpPage = () => {
                                 setPassword={setPassword}
                             />
 
-                            {message && <div className="mt-6"><p className={message.status === 'failed' ? 'text-red-600' : 'text-green-600'}>{message.message}</p></div>}
+                            {message && (
+                                <div className="mt-6">
+                                    <p
+                                        className={
+                                            message.status === "failed"
+                                                ? "text-red-600"
+                                                : "text-green-600"
+                                        }>
+                                        {message.message}
+                                    </p>
+                                </div>
+                            )}
 
-                            <button onClick={signUpHandler} type="submit" disabled={signUpLoading && !message ? true : false} className="flex justify-center items-center gap-x-2 bg-primary w-full text-lg py-3 mt-[28px] rounded-2xl text-white hover:shadow-button hover:shadow-primary/50 dark:hover:shadow-primary/20 hover:transition-shadow hover:duration-150 duration-200 transition-shadow ">
-                                <span>Sign up</span> {signUpLoading && !message && <span className="loader"></span>}
+                            <button
+                                onClick={signUpHandler}
+                                type="submit"
+                                disabled={signUpLoading}
+                                className="flex justify-center items-center gap-x-2 bg-primary w-full text-lg py-3 mt-[28px] rounded-2xl text-white hover:shadow-button hover:shadow-primary/50 dark:hover:shadow-primary/20 hover:transition-shadow hover:duration-150 duration-200 transition-shadow ">
+                                <span>Sign up</span>{signUpLoading && (<span className="loader"></span>)}
                             </button>
                         </form>
-
 
                         <p className="font-light text-sm mt-8 text-center dark:text-gray-400">
                             Already have an account?{" "}
                             <Link
                                 className="text-primary font-normal"
-                                href={"/signin"}
-                                >
+                                href={"/signin"}>
                                 Sign in
                             </Link>
                         </p>

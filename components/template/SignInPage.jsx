@@ -14,9 +14,12 @@ const SignInPage = () => {
     const [password, setPassword] = useState();
 
     const [message, setMessage] = useState("");
+    const [signUpLoading, setSignUpLoading] = useState(false)
 
     const signInHandler = async (e) => {
         e.preventDefault();
+        setSignUpLoading(true);
+        setMessage("")
 
         const res = await signIn("credentials", {
             email,
@@ -24,8 +27,12 @@ const SignInPage = () => {
             redirect: false,
         });
         setMessage(res);
+        setEmail("");
+        setPassword("");
         if (!res.error) {
             router.replace('/')
+        } else {
+            setSignUpLoading(false)
         }
     };
     console.log(message);
@@ -82,8 +89,9 @@ const SignInPage = () => {
                             <button
                                 onClick={signInHandler}
                                 type="submit"
-                                className="bg-primary w-full text-lg py-3 mt-[28px] rounded-2xl text-white hover:shadow-button hover:shadow-primary/50 dark:hover:shadow-primary/20 hover:transition-shadow hover:duration-150 duration-200 transition-shadow ">
-                                Sign in
+                                disabled={signUpLoading }
+                                className="flex justify-center items-center gap-x-2 bg-primary w-full text-lg py-3 mt-[28px] rounded-2xl text-white hover:shadow-button hover:shadow-primary/50 dark:hover:shadow-primary/20 hover:transition-shadow hover:duration-150 duration-200 transition-shadow ">
+                                 <span>Sign in</span> {signUpLoading && <span className="loader"></span>}
                             </button>
                         </form>
 
