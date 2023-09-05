@@ -1,4 +1,5 @@
 import User from "@/models/User";
+import { verifyPassword } from "@/utils/auth";
 import connectDB from "@/utils/connectDB";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -13,14 +14,14 @@ const authOptions = {
                 try {
                     connectDB();
                 } catch (e) {
-                    throw new Error(e);
+                    throw new Error("Error in connecting DB" ,e);
                 }
 
                 if (!email || !password) {
                     throw new Error(`Invalid Data`)
                 }
             
-                const user = User.findOne({ email: email });
+                const user = await User.findOne({ email: email });
                 if (!user) {
                     throw new Error(`user doesn't exist!`)
                 }
