@@ -7,6 +7,23 @@ const SignUpPage = () => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
+    const [message, setMessage] = useState("");
+    const [signUpLoading, setSignUpLoading] = useState(false)
+
+    const signUpHandler = async (e) => {
+        e.preventDefault();
+        setSignUpLoading(true)
+
+        const res = await fetch('/api/auth/signup', {
+            method: 'POST',
+            body: JSON.stringify({ email, password }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        const data = await res.json();
+        setMessage(data)
+        console.log(data);
+    }
+
     return (
         <div className="container h-screen w-screen flex items-center justify-center -mt-6 md:mt-0">
             <div className="dark:bg-DarkSecond flex flex-row sm:justify-center items-center md:gap-x-2 lg:gap-x-7 justify-between w-full lg:w-10/12 xl:w-9/12 p-0 rounded-3xl shadow-gray-300/70 dark:shadow-none shadow-simple">
@@ -33,7 +50,7 @@ const SignUpPage = () => {
                             Create an account
                         </h3>
 
-                        <form className="mt-8 w-full">
+                        <form className="mt-8 w-full" method="POST">
                             <FormAuth
                                 email={email}
                                 password={password}
@@ -41,8 +58,10 @@ const SignUpPage = () => {
                                 setPassword={setPassword}
                             />
 
-                            <button type="submit" className="bg-primary w-full text-lg py-3 mt-[28px] rounded-2xl text-white hover:shadow-button hover:shadow-primary/50 dark:hover:shadow-primary/20 hover:transition-shadow hover:duration-150 duration-200 transition-shadow ">
-                                Sign up
+                            {message && <div className="mt-6"><p className={message.status === 'failed' ? 'text-red-600' : 'text-green-600'}>{message.message}</p></div>}
+
+                            <button onClick={signUpHandler} type="submit" disabled={signUpLoading && !message ? true : false} className="flex justify-center items-center gap-x-2 bg-primary w-full text-lg py-3 mt-[28px] rounded-2xl text-white hover:shadow-button hover:shadow-primary/50 dark:hover:shadow-primary/20 hover:transition-shadow hover:duration-150 duration-200 transition-shadow ">
+                                <span>Sign up</span> {signUpLoading && !message && <span className="loader"></span>}
                             </button>
                         </form>
 
