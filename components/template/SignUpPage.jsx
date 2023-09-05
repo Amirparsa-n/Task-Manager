@@ -33,18 +33,19 @@ const SignUpPage = () => {
                             Create an account
                         </h3>
 
-                        <div className="mt-8 w-full">
+                        <form className="mt-8 w-full">
                             <FormAuth
                                 email={email}
                                 password={password}
                                 setEmail={setEmail}
                                 setPassword={setPassword}
                             />
-                        </div>
 
-                        <button className="bg-primary w-full text-lg py-3 mt-[28px] rounded-2xl text-white hover:shadow-button hover:shadow-primary/50 dark:hover:shadow-primary/20 hover:transition-shadow hover:duration-150 duration-200 transition-shadow ">
-                            Sign up
-                        </button>
+                            <button type="submit" className="bg-primary w-full text-lg py-3 mt-[28px] rounded-2xl text-white hover:shadow-button hover:shadow-primary/50 dark:hover:shadow-primary/20 hover:transition-shadow hover:duration-150 duration-200 transition-shadow ">
+                                Sign up
+                            </button>
+                        </form>
+
 
                         <p className="font-light text-sm mt-8 text-center dark:text-gray-400">
                             Already have an account?{" "}
