@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider, getSession } from "next-auth/react";
 import Layout from "@/components/layout/Layout";
 import ContextProvide from "@/contexts/ContextProvide";
 

@@ -40,7 +40,11 @@ const authOptions = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
     ],
-    secret: process.env.JWT_SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
+    pages: {
+        signIn: "/signin",
+        // error: "/api/auth/error",
+    },
 };
 
 export default NextAuth(authOptions);

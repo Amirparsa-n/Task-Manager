@@ -3,6 +3,7 @@ import { useContext } from "react";
 import Sidebar from "../module/Sidebar";
 import { stateContext } from "@/contexts/ContextProvide";
 import BottomNavigation from "../module/BottomNavigation";
+import { getSession, useSession } from "next-auth/react";
 
 const Layout = ({ children }) => {
     const { activeMenu, setActiveMenu } = useContext(stateContext);
@@ -52,9 +53,7 @@ const Layout = ({ children }) => {
                 <div className="bg-indigo-400 w-full">Navbar</div>
 
                 <div className="">
-                    <div>
-                        {children}
-                    </div>
+                    <div>{children}</div>
                     <BottomNavigation />
                 </div>
             </div>
