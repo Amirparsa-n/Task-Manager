@@ -1,10 +1,16 @@
 import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
+import Layout from "@/components/layout/Layout";
+import ContextProvide from "@/contexts/ContextProvide";
 
 export default function App({ Component, pageProps }) {
     return (
         <SessionProvider session={pageProps.session}>
-            <Component {...pageProps} />
+            <ContextProvide>
+                <Layout>
+                    <Component {...pageProps} />
+                </Layout>
+            </ContextProvide>
         </SessionProvider>
     );
 }

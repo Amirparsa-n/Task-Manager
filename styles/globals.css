@@ -27,3 +27,7 @@
         opacity: 0;
     }
 }
+
+.transitionSidebar {
+    transition: all 150ms ease;
+}
