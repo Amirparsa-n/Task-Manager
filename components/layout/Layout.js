@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { Children, useEffect, useState } from "react";
 import { useContext } from "react";
 import Sidebar from "../module/Sidebar";
 import { stateContext } from "@/contexts/ContextProvide";
+import BottomNavigation from "../module/BottomNavigation";
 
-const Layout = () => {
+const Layout = ({ children }) => {
     const { activeMenu, setActiveMenu } = useContext(stateContext);
     console.log(activeMenu);
     const [windowWidth, setWindowWidth] = useState(null);
@@ -50,7 +51,12 @@ const Layout = () => {
                 }>
                 <div className="bg-indigo-400 w-full">Navbar</div>
 
-                <div className="bg-orange-300">content</div>
+                <div className="">
+                    <div>
+                        {children}
+                    </div>
+                    <BottomNavigation />
+                </div>
             </div>
         </div>
     );

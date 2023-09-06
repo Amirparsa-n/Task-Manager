@@ -31,3 +31,7 @@
 .transitionSidebar {
     transition: all 150ms ease;
 }
+
+.with-shadow {
+    filter:drop-shadow(0px 0px 12px rgba(62, 123, 250, 0.8)) ;
+}
