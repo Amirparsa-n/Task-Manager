@@ -1,7 +1,8 @@
+import TaskPage from "@/components/template/TaskPage";
 import { getSession } from "next-auth/react";
 
 export default function Home({ user }) {
-    return <div>yo yo</div>;
+    return <TaskPage />;
 }
 
 export async function getServerSideProps({ req }) {

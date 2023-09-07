@@ -48,7 +48,7 @@ const Sidebar = () => {
     ];
 
     return (
-        <div className="h-screen px-6 pt-5 md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
+        <div className="h-screen hidden md:block px-6 pt-5 md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
             <div className="flex items-center gap-x-3">
                 <Image
                     src={"/assets/images/logo.png"}
