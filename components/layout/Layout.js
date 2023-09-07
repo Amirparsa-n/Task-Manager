@@ -1,38 +1,29 @@
-import { Children, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useContext } from "react";
-import Sidebar from "../module/Sidebar";
 import { stateContext } from "@/contexts/ContextProvide";
 import BottomNavigation from "../module/BottomNavigation";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+
+// Components
+import Sidebar from "../module/Sidebar";
+import Navbar from "../module/Navbar";
 
 const Layout = ({ children }) => {
     const { activeMenu, setActiveMenu } = useContext(stateContext);
-    console.log(activeMenu);
-    const [windowWidth, setWindowWidth] = useState(null);
 
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            setWindowWidth(window.innerWidth);
+    const { data: session, status } = useSession();
 
-            const handleResize = () => {
-                setWindowWidth(window.innerWidth);
-            };
+    if (status === "loading") {
+        return (
+            <div className="h-screen w-screen flex justify-center items-center">
+                <span className="loaderLayout"></span>
+            </div>
+        );
+    }
 
-            window.addEventListener("resize", handleResize);
-
-            return () => {
-                window.removeEventListener("resize", handleResize);
-            };
-        }
-    }, []);
-
-    useEffect(() => {
-        if (windowWidth <= 1105) {
-            setActiveMenu(false);
-        } else {
-            setActiveMenu(true);
-        }
-    }, [windowWidth]);
+    if (status === "unauthenticated") {
+        return <div>{children}</div>;;
+    }
 
     return (
         <div className="flex flex-row ">
@@ -50,7 +41,9 @@ const Layout = ({ children }) => {
                         ? "md:ml-72 w-full transitionSidebar"
                         : "w-full ml-0 transitionSidebar"
                 }>
-                <div className="bg-indigo-400 w-full">Navbar</div>
+                <div className="bg-indigo-400 w-full">
+                    <Navbar />
+                </div>
 
                 <div className="">
                     <div>{children}</div>
