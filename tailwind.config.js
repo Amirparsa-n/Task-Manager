@@ -31,6 +31,7 @@ module.exports = {
         primary: '#3E7BFA',
         bgDark: '#1C1C28',
         DarkSecond: '#21222C',
+        textSecondary: '#93949A',
       },
 
       boxShadow: {

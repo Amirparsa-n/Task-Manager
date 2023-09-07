@@ -98,3 +98,77 @@
 .with-shadow {
     filter: drop-shadow(0px 0px 12px rgba(62, 123, 250, 0.8));
 }
+
+
+#darkModHandler .body {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color .1s;
+    padding: 15px 15px;
+}
+
+
+#darkModHandler label,
+.toggle {
+    height: 2.5rem;
+    border-radius: 100px;
+}
+
+#darkModHandler  label {
+    width: 100%;
+    background-color: rgba(0, 0, 0, .1);
+    border-radius: 100px;
+    position: relative;
+    cursor: pointer;
+}
+
+#darkModHandler .toggle {
+    position: absolute;
+    width: 50%;
+    background-color: #fff;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, .15);
+    transition: transform .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#darkModHandler .names {
+    font-size: 90%;
+    font-weight: bolder;
+    width: 78%;
+    margin-left: 12.5%;
+    margin-top: 3.5%; 
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+}
+
+#darkModHandler .dark {
+    opacity: .5;
+}
+
+
+/* -------- Switch Styles ------------*/
+#darkModHandler [type="checkbox"] {
+    display: none;
+}
+
+/* Toggle */
+#darkModHandler [type="checkbox"]:checked+.app .toggle {
+    transform: translateX(100%);
+    background-color: #34323D;
+}
+
+#darkModHandler [type="checkbox"]:checked+.app .dark {
+    opacity: 1;
+}
+
+#darkModHandler [type="checkbox"]:checked+.app .light {
+    opacity: .5;
+}
+
+#darkModHandler [type="checkbox"]:checked+.app .body {
+    color: white;
+} 

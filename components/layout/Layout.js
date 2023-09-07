@@ -22,13 +22,13 @@ const Layout = ({ children }) => {
     }
 
     if (status === "unauthenticated") {
-        return <div>{children}</div>;;
+        return <div>{children}</div>;
     }
 
     return (
         <div className="flex flex-row ">
             {activeMenu ? (
-                <div className="w-72 fixed h-screen transitionSidebar z-[1000] bg-red-400">
+                <div className="w-72 fixed h-screen transitionSidebar z-[1000] bg-[#F8FAFA] drop-shadow-xl">
                     <Sidebar />
                 </div>
             ) : (
