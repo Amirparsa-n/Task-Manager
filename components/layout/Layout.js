@@ -7,9 +7,23 @@ import { useSession } from "next-auth/react";
 // Components
 import Sidebar from "../module/Sidebar";
 import Navbar from "../module/Navbar";
+import { ThemeProvider } from "next-themes";
+
+import { useTheme } from "next-themes";
 
 const Layout = ({ children }) => {
     const { activeMenu, setActiveMenu } = useContext(stateContext);
+    const { theme } = useTheme();
+    console.log(theme);
+
+    let sidebarClass;
+        if (theme === "light") {
+            sidebarClass =
+                "w-72 fixed h-screen transitionSidebar z-[1000] drop-shadow-xl bg-[#F8FAFA]";
+        } else if (theme === "dark") {
+            sidebarClass =
+                "w-72 fixed h-screen transitionSidebar z-[1000] drop-shadow-xl bg-DarkSecond";
+        }
 
     const { data: session, status } = useSession();
 
@@ -28,7 +42,7 @@ const Layout = ({ children }) => {
     return (
         <div className="flex flex-row ">
             {activeMenu ? (
-                <div className="w-72 fixed h-screen transitionSidebar z-[1000] bg-[#F8FAFA] drop-shadow-xl">
+                <div className={sidebarClass}>
                     <Sidebar />
                 </div>
             ) : (
@@ -36,8 +50,11 @@ const Layout = ({ children }) => {
             )}
 
             <div
-                className={activeMenu ? "lg:ml-72 w-full transitionSidebar" : "w-full ml-0 transitionSidebar"}>
-
+                className={
+                    activeMenu
+                        ? "lg:ml-72 w-full transitionSidebar"
+                        : "w-full ml-0 transitionSidebar"
+                }>
                 <div className="">
                     <div>{children}</div>
                     <BottomNavigation />

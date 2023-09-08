@@ -2,13 +2,13 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useContext } from "react";
+import { useTheme } from "next-themes";
 
 // components
 import SidebarItem from "../element/SidebarItem";
 
 // context
 import { stateContext } from "@/contexts/ContextProvide";
-
 
 // Icons
 import NoteSidebar from "../icons/NoteSidebar";
@@ -21,11 +21,19 @@ import Moon from "../icons/Moon";
 import CloseIcon from "../icons/closeIcon";
 
 const Sidebar = () => {
-
-    const { activeMenu, setActiveMenu } = useContext(stateContext)
-
+    const { setActiveMenu } = useContext(stateContext);
     const router = useRouter();
     const pathname = router.pathname;
+
+    const { theme, setTheme } = useTheme();
+
+    const themeHandler = (e) => {
+        if (e.target.checked) {
+            setTheme("dark");
+        } else {
+            setTheme("light");
+        }
+    };
 
     const sidebarItem = [
         {
@@ -73,7 +81,10 @@ const Sidebar = () => {
                     </h2>
                 </div>
 
-                <button type="button" className="lg:hidden" onClick={() => setActiveMenu(false)}>
+                <button
+                    type="button"
+                    className="lg:hidden"
+                    onClick={() => setActiveMenu(false)}>
                     <CloseIcon />
                 </button>
             </div>
@@ -126,7 +137,13 @@ const Sidebar = () => {
             <div
                 className="absolute w-full bottom-2 left-0"
                 id="darkModHandler">
-                <input type="checkbox" id="switch" />
+                <input
+                    type="checkbox"
+                    id="switch"
+                    // defaultChecked={theme}
+                    checked={theme === "dark" ? true : false}
+                    onChange={themeHandler}
+                />
                 <div className="app">
                     <div className="body">
                         <label htmlFor="switch">
