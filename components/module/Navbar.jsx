@@ -41,7 +41,7 @@ const Navbar = ({ title }) => {
 
     return (
         <div>
-            <div className="bg-[#F8FAFA] drop-shadow-md flex justify-between items-center py-2 md:py-4 px-4 sm:px-8 z-[100000000]">
+            <div className="bg-[#F8FAFA] dark:bg-DarkSecond drop-shadow-md flex justify-between items-center py-2 md:py-4 px-4 sm:px-8 z-[100000000]">
                 <div className="flex gap-x-8 items-center">
                     <button
                         className="hidden md:block"
