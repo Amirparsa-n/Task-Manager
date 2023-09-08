@@ -3,6 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 
+// Elements
+import Hamburger from "../element/Hamburger";
+
 // Icons
 import AddIconNavbar from "../icons/AddIconNavbar";
 import ProfileNavbar from "../icons/ProfileNavbar";
@@ -39,7 +42,18 @@ const Navbar = ({ title }) => {
     return (
         <div>
             <div className="bg-[#F8FAFA] drop-shadow-md flex justify-between items-center py-2 md:py-6 px-4 sm:px-8 z-[100000000]">
-                <p className="text-lg font-semibold">{title}</p>
+                <div className="flex gap-x-8 items-center">
+                    <button
+                        className="hidden md:block"
+                        type="button"
+                        onClick={() =>
+                            setActiveMenu((prevActiveMenu) => !prevActiveMenu)
+                        }>
+                        <Hamburger activeMenu={activeMenu} />
+                    </button>
+                    <p className="text-lg font-semibold">{title}</p>
+                </div>
+
                 <Link href={"/"} className="md:hidden">
                     <Image
                         src={"/assets/images/logo.png"}
