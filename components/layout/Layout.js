@@ -36,14 +36,7 @@ const Layout = ({ children }) => {
             )}
 
             <div
-                className={
-                    activeMenu
-                        ? "md:ml-72 w-full transitionSidebar"
-                        : "w-full ml-0 transitionSidebar"
-                }>
-                {/* <div className="bg-indigo-400 w-full">
-                    <Navbar />
-                </div> */}
+                className={activeMenu ? "lg:ml-72 w-full transitionSidebar" : "w-full ml-0 transitionSidebar"}>
 
                 <div className="">
                     <div>{children}</div>

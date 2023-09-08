@@ -1,9 +1,14 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useContext } from "react";
 
 // components
 import SidebarItem from "../element/SidebarItem";
+
+// context
+import { stateContext } from "@/contexts/ContextProvide";
+
 
 // Icons
 import NoteSidebar from "../icons/NoteSidebar";
@@ -13,8 +18,12 @@ import AddProjectSidebar from "../icons/AddProjectSidebar";
 import ProjectSidebar from "../icons/ProjectSidebar";
 import Sun from "../icons/Sun";
 import Moon from "../icons/Moon";
+import CloseIcon from "../icons/closeIcon";
 
 const Sidebar = () => {
+
+    const { activeMenu, setActiveMenu } = useContext(stateContext)
+
     const router = useRouter();
     const pathname = router.pathname;
 
@@ -49,18 +58,24 @@ const Sidebar = () => {
 
     return (
         <div className="h-screen hidden md:block px-6 pt-5 md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
-            <div className="flex items-center gap-x-3">
-                <Image
-                    src={"/assets/images/logo.png"}
-                    width={60}
-                    height={60}
-                    className="w-[40px]"
-                    alt="logo"
-                    priority={true}
-                />
-                <h2 className="font-bold text-lg dark:text-white">
-                    Task manager
-                </h2>
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-x-3">
+                    <Image
+                        src={"/assets/images/logo.png"}
+                        width={60}
+                        height={60}
+                        className="w-[40px]"
+                        alt="logo"
+                        priority={true}
+                    />
+                    <h2 className="font-bold text-lg dark:text-white">
+                        Task manager
+                    </h2>
+                </div>
+
+                <button type="button" className="lg:hidden" onClick={() => setActiveMenu(false)}>
+                    <CloseIcon />
+                </button>
             </div>
 
             <div className="mt-14 flex flex-col gap-y-5">
@@ -108,15 +123,21 @@ const Sidebar = () => {
                 </div>
             </div>
 
-            <div className="absolute w-full bottom-2 left-0" id="darkModHandler">
+            <div
+                className="absolute w-full bottom-2 left-0"
+                id="darkModHandler">
                 <input type="checkbox" id="switch" />
                 <div className="app">
                     <div className="body">
                         <label htmlFor="switch">
                             <div className="toggle"></div>
                             <div className="names">
-                                <p className="light flex gap-x-2 items-center">Light <Sun /></p>
-                                <p className="dark flex gap-x-2 items-center">Dark <Moon /></p>
+                                <p className="light flex gap-x-2 items-center">
+                                    Light <Sun />
+                                </p>
+                                <p className="dark flex gap-x-2 items-center">
+                                    Dark <Moon />
+                                </p>
                             </div>
                         </label>
                     </div>
