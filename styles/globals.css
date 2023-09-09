@@ -117,7 +117,7 @@
     border-radius: 100px;
 }
 
-#darkModHandler  label {
+#darkModHandler label {
     width: 100%;
     background-color: rgba(0, 0, 0, .1);
     border-radius: 100px;
@@ -138,7 +138,7 @@
     font-weight: bolder;
     width: 78%;
     margin-left: 12.5%;
-    margin-top: 3.5%; 
+    margin-top: 3.5%;
     position: absolute;
     display: flex;
     justify-content: space-between;
@@ -171,4 +171,155 @@
 
 #darkModHandler [type="checkbox"]:checked+.app .body {
     color: white;
-} 
+}
+
+
+
+@media only screen and (max-width: 768px) {
+    .slideInUp {
+        -webkit-animation-name: slideInUp;
+        animation-name: slideInUp;
+        -webkit-animation-duration: .7s;
+        animation-duration: .7s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+    }
+
+    @-webkit-keyframes slideInUp {
+        0% {
+            -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+            visibility: visible;
+        }
+
+        100% {
+            -webkit-transform: translateY(0);
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideInUp {
+        0% {
+            -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+            visibility: visible;
+        }
+
+        100% {
+            -webkit-transform: translateY(0);
+            transform: translateY(0);
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .fadeIn {
+        -webkit-animation-name: fadeIn;
+        animation-name: fadeIn;
+        -webkit-animation-duration: 1s;
+        animation-duration: 1s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+    }
+
+    @-webkit-keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #ebebeb;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #6d6d6da5;
+}
+
+/* task color */
+.todo {
+    background-color: #FFCE00;
+    box-shadow: 0 0 12px -1px rgba(255, 204, 0, 0.3);
+}
+
+.in-progress {
+    background-color: #AA5BDA;
+    box-shadow: 0 0 12px -1px rgba(170, 93, 218, 0.3);
+}
+
+.review {
+    background-color: #0063F7;
+    box-shadow: 0 0 12px -1px rgba(0, 99, 247, 0.3);
+}
+
+.done {
+    background-color: #FF8A00;
+    box-shadow: 0 0 12px -1px rgb(255, 138, 0.3);
+}
+
+
+.clear {
+    clear: both;
+}
+
+.checkBox {
+    display: block;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0);
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0px 0px 0px 2px #fff;
+}
+
+.checkBox div {
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    top: -52px;
+    left: -52px;
+    position: absolute;
+    transform: rotateZ(45deg);
+    z-index: 100;
+}
+
+.checkBox input[type=radio]:checked+div {
+    left: -10px;
+    top: -10px;
+}
+
+.checkBox input[type=radio] {
+    position: absolute;
+    left: 50px;
+    visibility: hidden;
+}
+
+.transition {
+    transition: 300ms ease;
+}

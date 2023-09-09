@@ -8,22 +8,10 @@ import { useSession } from "next-auth/react";
 import Sidebar from "../module/Sidebar";
 import Navbar from "../module/Navbar";
 import { ThemeProvider } from "next-themes";
-
-import { useTheme } from "next-themes";
+import AddTask from "../template/AddTask";
 
 const Layout = ({ children }) => {
-    const { activeMenu, setActiveMenu } = useContext(stateContext);
-    const { theme } = useTheme();
-    console.log(theme);
-
-    let sidebarClass;
-        if (theme === "light") {
-            sidebarClass =
-                "w-72 fixed h-screen transitionSidebar z-[1000] drop-shadow-xl bg-[#F8FAFA]";
-        } else if (theme === "dark") {
-            sidebarClass =
-                "w-72 fixed h-screen transitionSidebar z-[1000] drop-shadow-xl bg-DarkSecond";
-        }
+    const { activeMenu, showAddTaskModal } = useContext(stateContext);
 
     const { data: session, status } = useSession();
 
@@ -40,14 +28,16 @@ const Layout = ({ children }) => {
     }
 
     return (
-        <div className="flex flex-row ">
+        <div className="flex flex-row relative">
+            <div className="hidden md:block">
             {activeMenu ? (
-                <div className={sidebarClass}>
+                <div className={"w-72 fixed h-screen transitionSidebar z-[1000] drop-shadow-xl bg-[#F8FAFA] dark:bg-DarkSecond"}>
                     <Sidebar />
                 </div>
             ) : (
                 <div className="w-0 h-screen transitionSidebar"></div>
             )}
+            </div>
 
             <div
                 className={
@@ -60,6 +50,8 @@ const Layout = ({ children }) => {
                     <BottomNavigation />
                 </div>
             </div>
+
+            {showAddTaskModal && <AddTask />}
         </div>
     );
 };

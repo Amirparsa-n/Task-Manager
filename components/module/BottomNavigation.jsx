@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import AddBottomNav from "../icons/AddBottomNav";
 import NoteBottomNav from "../icons/NoteBottomNav";
 import ProfileBottomNav from "../icons/ProfileBottomNav";
@@ -6,14 +7,19 @@ import SelectShapeBottomNav from "../icons/SelectShapeBottomNav";
 import TaskBottomNav from "../icons/TaskBottomNav";
 
 import Link from "next/link";
+
+// context
 import { useRouter } from "next/router";
+import { stateContext } from "@/contexts/ContextProvide";
 
 const BottomNavigation = () => {
     const router = useRouter();
     const pathname = router.pathname;
 
+    const { setShowAddTaskModal, showAddTaskModal } = useContext(stateContext)
+
     return (
-        <div className="md:hidden bg-[#F8FAFA] fixed bottom-0 w-full h-[80px] rounded-t-xl shadow-[0_4px_15px_2px_rgba(0,0,0,0.2)]">
+        <div className="md:hidden z-40 bg-[#F8FAFA] fixed bottom-0 w-full h-[80px] rounded-t-xl shadow-[0_4px_15px_2px_rgba(0,0,0,0.2)]">
             <div className="flex justify-between px-4 sm:px-8 mt-3">
                 <Link href={"/profile"}>
                     <div className="flex flex-col items-center">
@@ -39,9 +45,9 @@ const BottomNavigation = () => {
                     </div>
                 </Link>
 
-                <div className="flex flex-col items-center justify-center ">
+                <button type="button" onClick={() => setShowAddTaskModal(!showAddTaskModal)} className="flex flex-col items-center justify-center ">
                     <AddBottomNav />
-                </div>
+                </button>
 
                 <Link href={"/stickynote"}>
                     <div className="flex flex-col items-center">

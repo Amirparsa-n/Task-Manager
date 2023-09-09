@@ -11,7 +11,7 @@ import AddIconNavbar from "../icons/AddIconNavbar";
 import ProfileNavbar from "../icons/ProfileNavbar";
 
 const Navbar = ({ title }) => {
-    const { activeMenu, setActiveMenu } = useContext(stateContext);
+    const { activeMenu, setActiveMenu, setShowAddTaskModal } = useContext(stateContext);
     console.log(activeMenu);
     const [windowWidth, setWindowWidth] = useState(null);
 
@@ -65,7 +65,7 @@ const Navbar = ({ title }) => {
                 </Link>
 
                 <div className="hidden md:flex gap-x-10">
-                    <button className="flex bg-primary text-white py-2 rounded-xl gap-x-3 items-center px-3 hover:shadow-lg hover:shadow-primary/30 transition-shadow duration-300 hover:transition-shadow hover:first-letter:duration-200">
+                    <button onClick={() => setShowAddTaskModal(true)} className="flex bg-primary text-white py-2 rounded-xl gap-x-3 items-center px-3 hover:shadow-lg hover:shadow-primary/30 transition-shadow duration-300 hover:transition-shadow hover:first-letter:duration-200">
                         Add
                         <AddIconNavbar />
                     </button>

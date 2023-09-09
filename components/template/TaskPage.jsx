@@ -3,9 +3,9 @@ import Navbar from "../module/Navbar";
 const TaskPage = () => {
     return (
         <>
-            <div>
-                <Navbar title="My Task" />
-            </div>
+            <Navbar title="My Task" />
+
+           
         </>
     );
 };
