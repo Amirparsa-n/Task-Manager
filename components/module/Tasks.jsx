@@ -3,7 +3,7 @@ import DotTask from "../icons/DotTask";
 
 const Tasks = ({ data }) => {
     return (
-        <div className="h-[calc(100vh-219px)] md:h-[calc(100vh-183px)] overflow-auto">
+        <div className="h-[calc(100vh-219px)] md:h-[calc(100vh-183px)] overflow-auto taskContainer">
             <div className="mt-6 flex flex-col gap-y-5 ">
                 {data?.map((task) => (
                     <div key={task._id} className="bg-bgSecond rounded-xl">

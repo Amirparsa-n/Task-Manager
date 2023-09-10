@@ -254,6 +254,11 @@
     height: 4px;
 }
 
+.taskContainer::-webkit-scrollbar {
+    width: 4px !important;
+    height: 4px;
+}
+
 ::-webkit-scrollbar-track {
     background-color: #ebebeb;
     -webkit-border-radius: 10px;
@@ -358,4 +363,61 @@
 
 .transition {
     transition: 300ms ease;
+}
+
+/*------ checkbox dark mode in navbar mobile ------*/
+.container {
+    --color: #93949A;
+    --size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    font-size: var(--size);
+    user-select: none;
+    fill: var(--color);
+}
+
+.container .moon {
+    position: absolute;
+    top: -33px;
+    right: 60px;
+    animation: keyframes-fill .5s;
+}
+
+.container .sun {
+    position: absolute;
+    top: -33px;
+    right: 60px;
+    display: none;
+    animation: keyframes-fill .5s;
+
+}
+
+.container input:checked~.moon {
+    display: none;
+}
+
+.container input:checked~.sun {
+    display: block;
+}
+
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+@keyframes keyframes-fill {
+    0% {
+        transform: rotate(-360deg) scale(0);
+        opacity: 0;
+    }
+
+    75% {
+        transform: rotate(25deg);
+    }
 }

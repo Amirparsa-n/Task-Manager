@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import Navbar from "../module/Navbar";
 import Tasks from "../module/Tasks";
-import { DragDropContext } from "react-beautiful-dnd";
-import { Droppable } from "react-beautiful-dnd";
 import { stateContext } from "@/contexts/ContextProvide";
 
 const TaskPage = () => {
