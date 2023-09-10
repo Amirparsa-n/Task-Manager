@@ -9,6 +9,8 @@ import CloseIconCircle from "../icons/CloseIconCircle";
 const AddTask = () => {
     const { setShowAddTaskModal } = useContext(stateContext);
 
+    const [message, setMessage] = useState("")
+    const [fadeOutAni, setFadeOutAni] = useState("")
     const [todoDate, setTodoData] = useState({
         title: "",
         description: "",
@@ -19,10 +21,10 @@ const AddTask = () => {
     });
 
     const forms = [
-        { id: 0, label: "Title", name: "title", type: "text" },
+        { id: 0, label: "Title *", name: "title", type: "text" },
         { id: 1, label: "Description", name: "description", type: "text" },
         { id: 2, label: "Tag", name: "tag", type: "text" },
-        { id: 3, label: "Date", name: "date", type: "date" },
+        { id: 3, label: "Date *", name: "date", type: "date" },
     ];
 
     const status = [
@@ -38,14 +40,32 @@ const AddTask = () => {
         { id: 3, value: "hard", title: "Hard" },
     ];
 
-    console.log(todoDate);
+    const addTaskHandler = async (e) => {
+        e.preventDefault();
+        const res = await fetch('/api/tasks', {
+            method: 'POST',
+            body: JSON.stringify(todoDate),
+            headers: {'Content-Type': 'application/json'},
+        })
+        const data = await res.json();
+        setMessage(data)
+
+        if (data.status === 'success') {
+            setTimeout(() => {
+                setFadeOutAni("fadeOut");
+            }, 1000)
+            setTimeout(() => {
+                setShowAddTaskModal(false);
+            }, 1800)
+        }
+    }
 
     return (
         <>
             <div
-                className="Modal md:z-[99999] h-[81%] md:h-full mt-[53px] md:pt-[57px] md:mt-0 md:bg-black/40 md:backdrop-blur-sm"
+                className={`Modal md:z-[99999] h-[81%] md:h-full mt-[53px] md:pt-[57px] md:mt-0 md:bg-black/40 md:backdrop-blur-sm ${fadeOutAni}`}
                 id="main-image">
-                <div className="md:m-auto md:max-w-2xl md:rounded-xl border-t-2 border-primary md:border-none transitionSidebar bg-white h-[40rem] md:h-fit md:pt-6 px-4 md:px-8 py-6 slideInUp fadeIn">
+                <div className={`md:m-auto md:max-w-2xl md:rounded-xl border-t-2 border-primary md:border-none transitionSidebar bg-white h-[40rem] md:h-fit md:pt-6 px-4 md:px-8 py-6 slideInUp fadeIn `}>
                     <div className="flex justify-between items-center">
                         <h3 className="text-lg font-[500] text-primary">
                             Add Task
@@ -99,9 +119,16 @@ const AddTask = () => {
                             ))}
                         </div>
 
+                        <div className="text-center mt-4 h-6">
+                            {message && (
+                                <p className={message.status === 'failed' ? 'text-red-600' : 'text-green-600'}>{message.message}</p>
+                            )}
+                        </div>
+
                         <button
                             type="submit"
-                            className="bg-primary py-3 text-white rounded-xl mt-8 mb-4 md:mb-0 hover:shadow-button">
+                            onClick={addTaskHandler}
+                            className="bg-primary py-3 text-white rounded-xl mb-4 md:mb-0 hover:shadow-button">
                             Add
                         </button>
                     </form>
