@@ -31,6 +31,11 @@ module.exports = {
         bgDark: '#1C1C28',
         DarkSecond: '#21222C',
         textSecondary: '#93949A',
+        bgSecond: '#F2EFF2',
+        todo: '#FFCE00',
+        inProgress: '#AA5BDA',
+        review: '#0063F7',
+        done: '#FF8A00',
       },
 
       boxShadow: {

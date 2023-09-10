@@ -3,6 +3,7 @@ import connectDB from "@/utils/connectDB";
 import Joi from "joi";
 import { authOptions } from "./auth/[...nextauth]";
 import { getServerSession } from "next-auth";
+import { sortTodos } from "@/utils/sortTodos";
 
 export default async function handler(req, res) {
     try {
@@ -32,7 +33,7 @@ export default async function handler(req, res) {
         title: Joi.string().required().max(80),
         description: Joi.string().optional().allow("").max(200),
         status: Joi.string().required(),
-        tag: Joi.string().optional().allow("").max(20),
+        tag: Joi.string().optional().allow("").max(10),
         rating: Joi.string().required(),
         date: Joi.date().required(),
     })
@@ -50,6 +51,11 @@ export default async function handler(req, res) {
         user.save();
 
         res.status(201).json({ status: "success", message: "Todo created!" })
-    } 
+    } else if (req.method === "GET") {
+
+        const sortData = sortTodos(user.todos)
+
+        res.status(200).json({data: sortData})
+    }
 
 }

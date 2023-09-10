@@ -46,7 +46,7 @@ const Layout = ({ children }) => {
                         : "w-full ml-0 transitionSidebar"
                 }>
                 <div className="">
-                    <div>{children}</div>
+                    <div className="mb-20 md:mb-0">{children}</div>
                     <BottomNavigation />
                 </div>
             </div>
