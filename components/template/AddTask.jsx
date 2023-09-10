@@ -65,7 +65,7 @@ const AddTask = () => {
             <div
                 className={`Modal md:z-[99999] h-[81%] md:h-full mt-[53px] md:pt-[57px] md:mt-0 md:bg-black/40 md:backdrop-blur-sm ${fadeOutAni}`}
                 id="main-image">
-                <div className={`md:m-auto md:max-w-2xl md:rounded-xl border-t-2 border-primary md:border-none transitionSidebar bg-white h-[40rem] md:h-fit md:pt-6 px-4 md:px-8 py-6 slideInUp fadeIn `}>
+                <div className={`md:m-auto md:max-w-2xl md:rounded-xl border-t-2 border-primary md:border-none transitionSidebar bg-white dark:bg-DarkSecond md:h-fit md:pt-6 px-4 md:px-8 py-6 slideInUp fadeIn `}>
                     <div className="flex justify-between items-center">
                         <h3 className="text-lg font-[500] text-primary">
                             Add Task
@@ -128,7 +128,7 @@ const AddTask = () => {
                         <button
                             type="submit"
                             onClick={addTaskHandler}
-                            className="bg-primary py-3 text-white rounded-xl mb-4 md:mb-0 hover:shadow-button">
+                            className="bg-primary py-3 text-white rounded-xl mb-4 md:mb-0 hover:shadow-button hover:transition-shadow duration-500 hover:duration-300">
                             Add
                         </button>
                     </form>

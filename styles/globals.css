@@ -249,6 +249,13 @@
     height: 4px;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.show-scrollbar::-webkit-scrollbar {
+    display: block;
+}
+
 .description-task::-webkit-scrollbar {
     width: 3px !important;
     height: 4px;
@@ -304,12 +311,12 @@
 /* task color */
 .todo {
     background-color: #FFCE00;
-    box-shadow: 0 0 12px -1px rgba(255, 204, 0, 0.3);
+    box-shadow: 0 0 12px -2px rgba(255, 204, 0, 0.3);
 }
 
 .in-progress {
     background-color: #AA5BDA;
-    box-shadow: 0 0 12px -1px rgba(170, 93, 218, 0.3);
+    box-shadow: 0 0 12px -1px rgba(194, 121, 239, 0.3);
 }
 
 .review {
@@ -319,7 +326,7 @@
 
 .done {
     background-color: #FF8A00;
-    box-shadow: 0 0 12px -1px rgb(255, 138, 0.3);
+    box-shadow: 0 0 12px -3px rgb(255, 138, 0.3);
 }
 
 
@@ -421,3 +428,9 @@
         transform: rotate(25deg);
     }
 }
+
+.items.active {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+    transform: scale(1);
+  }

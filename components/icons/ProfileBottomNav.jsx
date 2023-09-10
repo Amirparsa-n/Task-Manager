@@ -6,6 +6,7 @@ function ProfileBottomNav() {
       <g
         fill="none"
         stroke="#21222c"
+        className="dark:stroke-gray-300"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="1.5"

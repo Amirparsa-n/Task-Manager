@@ -4,7 +4,7 @@ export const stateContext = createContext();
 
 const ContextProvide = ({ children }) => {
     const [activeMenu, setActiveMenu] = useState(true);
-    const [showAddTaskModal, setShowAddTaskModal] = useState(false);
+    const [showAddTaskModal, setShowAddTaskModal] = useState(true);
 
     return (
         <stateContext.Provider
