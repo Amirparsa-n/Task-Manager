@@ -2,7 +2,7 @@ import User from "@/models/User";
 import { hashPassword } from "@/utils/auth";
 import connectDB from "@/utils/connectDB";
 
-export default async function (req, res) {
+export default async function handler (req, res) {
     if (req.method !== "POST") return;
 
     try {
