@@ -1,7 +1,7 @@
 import User from "@/models/User";
 import connectDB from "@/utils/connectDB";
 import Joi from "joi";
-import { authOptions } from "./auth/[...nextauth]";
+import { authOptions } from "../auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 
 export default async function handler(req, res) {
@@ -37,10 +37,9 @@ export default async function handler(req, res) {
         date: Joi.date().required(),
     });
 
-    const taskUpdateSchema = Joi.object({
-        status: Joi.string()
-            .valid("todo", "done", "in-progress", "review")
-            .required(),
+    const editSchema = Joi.object({
+        title: Joi.string().required().max(80),
+        description: Joi.string().optional().allow("").max(200),
         id: Joi.string().required(),
     });
 
@@ -62,7 +61,7 @@ export default async function handler(req, res) {
     } else if (req.method === "GET") {
         res.status(200).json({ data: user.todos });
     } else if (req.method === "PATCH") {
-        const { error, value } = taskUpdateSchema.validate(req.body);
+        const { error, value } = editSchema.validate(req.body);
 
         if (error) {
             console.log(error);
@@ -73,13 +72,23 @@ export default async function handler(req, res) {
         try {
             await User.updateOne(
                 { "todos._id": value.id },
-                { $set: { "todos.$.status": value.status } }
+                {
+                    $set: {
+                        "todos.$.title": value.title,
+                        "todos.$.description": value.description,
+                    },
+                }
             );
-            res.status(201).json({ status: "success", message: "Todo Updated!" });
-
+            res.status(201).json({
+                status: "success",
+                message: "Edit task successfully!",
+            });
         } catch (e) {
             console.log(e);
-            res.status(500).json({ status: "failed", message:'Error updating, Try again'});
+            res.status(500).json({
+                status: "failed",
+                message: "Error in Edit task, Try again",
+            });
         }
     }
 }
