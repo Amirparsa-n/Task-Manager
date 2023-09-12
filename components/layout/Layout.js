@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
     const { activeMenu, showAddTaskModal } = useContext(stateContext);
 
     const { data: session, status } = useSession();
-
+    
     if (status === "loading") {
         return (
             <div className="h-screen w-screen flex justify-center items-center">
@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
             </div>
         );
     }
-
+    
     if (status === "unauthenticated") {
         return <div>{children}</div>;
     }
