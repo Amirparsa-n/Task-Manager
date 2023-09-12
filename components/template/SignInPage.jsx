@@ -35,7 +35,6 @@ const SignInPage = () => {
             setSignUpLoading(false)
         }
     };
-    console.log(message);
 
     return (
         <div className="container h-screen w-screen flex items-center justify-center -mt-6 md:mt-0">

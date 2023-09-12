@@ -1,8 +1,6 @@
 "use client";
 
 const Hamburger = ({ activeMenu }) => {
-    console.log(activeMenu);
-
     return (
         <>
             <div className="Hamburger-container w-8 h-6 cursor-pointer flex items-center justify-between flex-col z-[20]">

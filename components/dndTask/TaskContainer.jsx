@@ -32,21 +32,6 @@ const Cols = [
     },
 ];
 
-const defaultsTask = [
-    {
-        status: "done",
-    },
-    {
-        status: "todo",
-    },
-    {
-        status: "review",
-    },
-    {
-        status: "in-progress",
-    },
-];
-
 function TaskContainer() {
     const { activeMenu } = useContext(stateContext);
 
@@ -57,12 +42,13 @@ function TaskContainer() {
     const sensors = useSensors(
         useSensor(PointerSensor, {
             activationConstraint: {
-                distance: 10,
+                distance: 30,
             },
         })
     );
-
+    const [isUpdate, setIsUpdate] = useState(false);
     const [tasks, setTasks] = useState([]);
+    const [updateStatusData, setUpdateStatusData] = useState(null);
 
     useEffect(() => {
         fetchTodos();
@@ -74,7 +60,25 @@ function TaskContainer() {
         setTasks(data.data);
     };
 
-    console.log(tasks);
+    const changeStatus = async (id, status) => {
+        setUpdateStatusData({ id, status });
+    };
+
+    const UpdateStatus = async (id, status) => {
+        const res = await fetch("/api/tasks", {
+            method: "PATCH",
+            body: JSON.stringify({ id, status }),
+            headers: { "Content-Type": "application/json" },
+        });
+        const data = await res.json();
+        console.log(data);
+    };
+
+    useEffect(() => {
+        if (isUpdate && updateStatusData) {
+            UpdateStatus(updateStatusData.id, updateStatusData.status);
+        }
+    }, [isUpdate]);
 
     useEffect(() => {
         const slider = document.querySelector(".items");
@@ -166,6 +170,7 @@ function TaskContainer() {
         }
 
         if (event.active.data.current?.type === "Task") {
+            setIsUpdate(false);
             setActiveTask(event.active.data.current.task);
             return;
         }
@@ -174,6 +179,7 @@ function TaskContainer() {
     function onDragEnd(event) {
         setActiveColumn(null);
         setActiveTask(null);
+        setIsUpdate(true);
 
         const { active, over } = event;
         if (!over) return;
@@ -196,7 +202,7 @@ function TaskContainer() {
             const overColumnIndex = columns.findIndex(
                 (col) => col.id === overId
             );
-
+            console.log("dreg ending column");
             return arrayMove(columns, activeColumnIndex, overColumnIndex);
         });
     }
@@ -223,9 +229,14 @@ function TaskContainer() {
 
                 if (tasks[activeIndex].status !== tasks[overIndex].status) {
                     tasks[activeIndex].status = tasks[overIndex].status;
+                    changeStatus(
+                        tasks[activeIndex]._id,
+                        tasks[overIndex].status
+                    );
                     return arrayMove(tasks, activeIndex, overIndex - 1);
                 }
 
+                changeStatus(tasks[activeIndex]._id, tasks[overIndex].status);
                 return arrayMove(tasks, activeIndex, overIndex);
             });
         }
@@ -237,6 +248,7 @@ function TaskContainer() {
                 const activeIndex = tasks.findIndex((t) => t._id === activeId);
                 tasks[activeIndex].status = overId;
                 console.log("DROPPING TASK OVER COLUMN", { activeIndex });
+                changeStatus(tasks[activeIndex]._id, tasks[activeIndex].status);
                 return arrayMove(tasks, activeIndex, activeIndex);
             });
         }
