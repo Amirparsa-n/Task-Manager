@@ -252,6 +252,7 @@
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }
+
 .show-scrollbar::-webkit-scrollbar {
     display: block;
 }
@@ -373,7 +374,7 @@
 }
 
 /*------ checkbox dark mode in navbar mobile ------*/
-.container {
+#navbar .container {
     --color: #93949A;
     --size: 30px;
     display: flex;
@@ -386,14 +387,14 @@
     fill: var(--color);
 }
 
-.container .moon {
+#navbar .container .moon {
     position: absolute;
     top: -33px;
     right: 60px;
     animation: keyframes-fill .5s;
 }
 
-.container .sun {
+#navbar .container .sun {
     position: absolute;
     top: -33px;
     right: 60px;
@@ -402,15 +403,15 @@
 
 }
 
-.container input:checked~.moon {
+#navbar .container input:checked~.moon {
     display: none;
 }
 
-.container input:checked~.sun {
+#navbar .container input:checked~.sun {
     display: block;
 }
 
-.container input {
+#navbar .container input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -433,4 +434,4 @@
     cursor: grabbing;
     cursor: -webkit-grabbing;
     transform: scale(1);
-  }
+}
