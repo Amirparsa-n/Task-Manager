@@ -40,11 +40,6 @@ function TaskCard({ task, deleteTask, updateTask }) {
         transform: CSS.Transform.toString(transform),
     };
 
-    const toggleEditMode = () => {
-        setEditMode((prev) => !prev);
-        setMouseIsOver(false);
-    };
-
     if (editMode) {
         return (
             <div
@@ -52,7 +47,6 @@ function TaskCard({ task, deleteTask, updateTask }) {
                 style={style}
                 {...attributes}
                 {...listeners}
-                // onClick={toggleEditMode}
                 className="bg-bgSecond dark:bg-DarkSecond rounded-xl cursor-default"
                 onMouseEnter={() => {
                     setMouseIsOver(true);
@@ -84,11 +78,11 @@ function TaskCard({ task, deleteTask, updateTask }) {
                     </div>
 
                     <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="mt-4 font-[500] py-1 bg-transparent w-full rounded-md px-1 border-gray-400" />
-                    {task.description && (
-                        <textarea name="description" value={description} onChange={(e) => setDescription(e.target.value)} className="text-gray-400 dark:text-gray-300 leading-[24px] text-sm mt-3 max-h-[100px] overflow-auto description-task py-1 bg-transparent w-full rounded-md px-1 border-gray-400" rows="5" />
-                    )}
 
-                    <button className="flex border-[1.5px] border-primary hover:bg-primary hover:text-white transition-colors hover:transition-colors duration-300 hover:duration-200 w-full justify-center mt-[18px] items-center text-primary rounded-lg py-1">
+                    <textarea name="description" value={description} onChange={(e) => setDescription(e.target.value)} className="text-gray-400 dark:text-gray-300 leading-[24px] text-sm mt-3 max-h-[100px] overflow-auto description-task py-1 bg-transparent w-full rounded-md px-1 border-gray-400" rows="5" />
+
+
+                    <button onClick={() => updateTask(task._id, {title, description})} className="flex border-[1.5px] border-primary hover:bg-primary hover:text-white transition-colors hover:transition-colors duration-300 hover:duration-200 w-full justify-center mt-[18px] items-center text-primary rounded-lg py-1">
                         Edit
                     </button>
 
@@ -141,13 +135,13 @@ function TaskCard({ task, deleteTask, updateTask }) {
                         <button
                             onClick={() => setEditMode(true)}
                             className="hidden md:block fadeInFast">
-                            <EditIcon color={"#a1a1a1"} />
+                            <EditIcon />
                         </button>
                     )}
                     <button
                         onClick={() => setEditMode(true)}
                         className="md:hidden">
-                        <EditIcon color={"#a1a1a1"} />
+                        <EditIcon />
                     </button>
                 </div>
 

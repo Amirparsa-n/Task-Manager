@@ -3,7 +3,7 @@ import React from "react";
 function EditIcon({ color }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="27.99" height="28">
-      <g fill={color} className="hover:fill-primary transition-colors">
+      <g className={color ? `fill-primary` : `hover:fill-primary transition-colors dark:hover:fill-primary fill-textSecondary dark:fill-littleDark`}>
         <path
           d="M18.523 1.892H7.585C2.844 1.892 0 4.723 0 9.477v10.924c0 4.768 2.844 7.6 7.585 7.6h10.924c4.754 0 7.585-2.831 7.585-7.585V9.477c.014-4.754-2.83-7.585-7.571-7.585z"
           data-name="Path 220"

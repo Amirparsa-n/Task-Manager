@@ -67,7 +67,7 @@ function TaskContainer() {
     };
 
     const UpdateStatus = async (id, status) => {
-        const res = await fetch("/api/tasks", {
+        const res = await fetch("/api/tasks/changeStatus", {
             method: "PATCH",
             body: JSON.stringify({ id, status }),
             headers: { "Content-Type": "application/json" },
@@ -87,6 +87,17 @@ function TaskContainer() {
             UpdateStatus(updateStatusData.id, updateStatusData.status);
         }
     }, [isUpdate]);
+
+
+    async function updateTask(id, {title, description}) {
+        const res = await fetch("/api/tasks", {
+            method: "PATCH",
+            body: JSON.stringify({ id, title, description }),
+            headers: { "Content-Type": "application/json" },
+        });
+        const data = await res.json();
+        console.log(data);
+    }
 
     useEffect(() => {
         const slider = document.querySelector(".items");
@@ -164,14 +175,6 @@ function TaskContainer() {
     function deleteTask(id) {
         const newTasks = tasks.filter((task) => task.id !== id);
         setTasks(newTasks);
-    }
-
-    function updateTask(id, content) {
-        // const newTasks = tasks.map((task) => {
-        //     if (task.id !== id) return task;
-        //     return { ...task, content };
-        // });
-        // setTasks(newTasks);
     }
 
     function onDragStart(event) {
