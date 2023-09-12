@@ -11,10 +11,10 @@ import { ThemeProvider } from "next-themes";
 import AddTask from "../template/AddTask";
 
 const Layout = ({ children }) => {
-    const { activeMenu, showAddTaskModal } = useContext(stateContext);
+    const { activeMenu, showAddTaskModal, setAddTaskInfo, addTaskInfo } = useContext(stateContext);
 
     const { data: session, status } = useSession();
-    
+
     if (status === "loading") {
         return (
             <div className="h-screen w-screen flex justify-center items-center">
@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
             </div>
         );
     }
-    
+
     if (status === "unauthenticated") {
         return <div>{children}</div>;
     }
@@ -30,13 +30,16 @@ const Layout = ({ children }) => {
     return (
         <div className="flex flex-row relative">
             <div className="hidden md:block">
-            {activeMenu ? (
-                <div className={"w-72 fixed h-screen transitionSidebar z-[1000] drop-shadow-xl bg-[#F8FAFA] dark:bg-DarkSecond"}>
-                    <Sidebar />
-                </div>
-            ) : (
-                <div className="w-0 h-screen transitionSidebar"></div>
-            )}
+                {activeMenu ? (
+                    <div
+                        className={
+                            "w-72 fixed h-screen transitionSidebar z-[1000] drop-shadow-xl bg-[#F8FAFA] dark:bg-DarkSecond"
+                        }>
+                        <Sidebar />
+                    </div>
+                ) : (
+                    <div className="w-0 h-screen transitionSidebar"></div>
+                )}
             </div>
 
             <div
@@ -51,7 +54,7 @@ const Layout = ({ children }) => {
                 </div>
             </div>
 
-            {showAddTaskModal && <AddTask />}
+            {showAddTaskModal && <AddTask setAddTaskInfo={setAddTaskInfo} addTaskInfo={addTaskInfo} />}
         </div>
     );
 };

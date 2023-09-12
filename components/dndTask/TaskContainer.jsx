@@ -33,7 +33,7 @@ const Cols = [
 ];
 
 function TaskContainer() {
-    const { activeMenu } = useContext(stateContext);
+    const { activeMenu, addTaskInfo } = useContext(stateContext);
 
     const [columns, setColumns] = useState(Cols);
     const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
@@ -52,7 +52,7 @@ function TaskContainer() {
 
     useEffect(() => {
         fetchTodos();
-    }, []);
+    }, [addTaskInfo]);
 
     const fetchTodos = async () => {
         const res = await fetch("/api/tasks");

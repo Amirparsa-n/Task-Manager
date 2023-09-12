@@ -6,7 +6,7 @@ import RadioButton from "../element/RadioButton";
 // Icons
 import CloseIconCircle from "../icons/CloseIconCircle";
 
-const AddTask = () => {
+const AddTask = ({ addTaskInfo, setAddTaskInfo }) => {
     const { setShowAddTaskModal } = useContext(stateContext);
 
     const [message, setMessage] = useState("")
@@ -53,6 +53,7 @@ const AddTask = () => {
         if (data.status === 'success') {
             setTimeout(() => {
                 setFadeOutAni("fadeOut");
+                setAddTaskInfo(data)
             }, 1000)
             setTimeout(() => {
                 setShowAddTaskModal(false);
