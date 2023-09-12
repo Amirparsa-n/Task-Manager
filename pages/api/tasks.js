@@ -35,23 +35,46 @@ export default async function handler(req, res) {
         tag: Joi.string().optional().allow("").max(10),
         rating: Joi.string().required(),
         date: Joi.date().required(),
-    })
+    });
+
+    const taskUpdateSchema = Joi.object({
+        status: Joi.string()
+            .valid("todo", "done", "in-progress", "review")
+            .required(),
+        id: Joi.string().required(),
+    });
 
     if (req.method === "POST") {
-        const { error, value } = taskSchema.validate(req.body, {abortEarly: true});
-        
+        const { error, value } = taskSchema.validate(req.body, {
+            abortEarly: true,
+        });
+
         if (error) {
             console.log(error);
-            const {message} = error.details[0]
-            return res.status(422).json({status: 'failed', message})
+            const { message } = error.details[0];
+            return res.status(422).json({ status: "failed", message });
         }
 
         user.todos.push(value);
         user.save();
 
-        res.status(201).json({ status: "success", message: "Todo created!" })
+        res.status(201).json({ status: "success", message: "Todo created!" });
     } else if (req.method === "GET") {
-        res.status(200).json({data: user.todos})
-    }
+        res.status(200).json({ data: user.todos });
+    } else if (req.method === "PATCH") {
+        const { error, value } = taskUpdateSchema.validate(req.body);
 
+        if (error) {
+            console.log(error);
+            const { message } = error.details[0];
+            return res.status(422).json({ status: "failed", message });
+        }
+
+        const result = await User.updateOne(
+            { "todos._id": value.id },
+            { $set: { "todos.$.status": value.status } }
+        );
+        console.log(result);
+        res.status(201).json({ status: "success", message: "Todo Updated!" });
+    }
 }
