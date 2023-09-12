@@ -70,11 +70,16 @@ export default async function handler(req, res) {
             return res.status(422).json({ status: "failed", message });
         }
 
-        const result = await User.updateOne(
-            { "todos._id": value.id },
-            { $set: { "todos.$.status": value.status } }
-        );
-        console.log(result);
-        res.status(201).json({ status: "success", message: "Todo Updated!" });
+        try {
+            await User.updateOne(
+                { "todos._id": value.id },
+                { $set: { "todos.$.status": value.status } }
+            );
+            res.status(201).json({ status: "success", message: "Todo Updated!" });
+
+        } catch (e) {
+            console.log(e);
+            res.status(500).json({ status: "failed", message:'Error updating, Try again'});
+        }
     }
 }

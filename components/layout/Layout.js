@@ -11,7 +11,7 @@ import { ThemeProvider } from "next-themes";
 import AddTask from "../template/AddTask";
 
 const Layout = ({ children }) => {
-    const { activeMenu, showAddTaskModal, setAddTaskInfo, addTaskInfo } = useContext(stateContext);
+    const { activeMenu, showAddTaskModal, setAddTaskInfo } = useContext(stateContext);
 
     const { data: session, status } = useSession();
 
@@ -54,7 +54,7 @@ const Layout = ({ children }) => {
                 </div>
             </div>
 
-            {showAddTaskModal && <AddTask setAddTaskInfo={setAddTaskInfo} addTaskInfo={addTaskInfo} />}
+            {showAddTaskModal && <AddTask setAddTaskInfo={setAddTaskInfo} />}
         </div>
     );
 };

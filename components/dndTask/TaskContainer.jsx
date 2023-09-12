@@ -12,6 +12,8 @@ import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import TaskCard from "./TaskCard";
 import { stateContext } from "@/contexts/ContextProvide";
+import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/router";
 
 const Cols = [
     {
@@ -34,7 +36,7 @@ const Cols = [
 
 function TaskContainer() {
     const { activeMenu, addTaskInfo } = useContext(stateContext);
-
+    const router = useRouter()
     const [columns, setColumns] = useState(Cols);
     const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
     const [activeColumn, setActiveColumn] = useState(null);
@@ -71,6 +73,12 @@ function TaskContainer() {
             headers: { "Content-Type": "application/json" },
         });
         const data = await res.json();
+        if (data.status === "failed") {
+            toast.error(data.message);
+            setTimeout(() => {
+                router.reload();
+            }, 600);
+        }
         console.log(data);
     };
 
@@ -104,50 +112,53 @@ function TaskContainer() {
             if (!isDown) return;
             e.preventDefault();
             const x = e.pageX - slider.offsetLeft;
-            const walk = (x - startX) * 3; //scroll-fast
+            const walk = (x - startX) * 2; //scroll-fast
             slider.scrollLeft = scrollLeft - walk;
         });
     }, []);
 
     if (tasks)
         return (
-            <div
-                className={`overflow-x-scroll no-scrollbar md:show-scrollbar items md:cursor-all-scroll xl:cursor-default px-4 md:px-8 mt-6 md:mt-12 flex justify-between gap-x-5 ${
-                    activeMenu && "lg:w-[calc(100vw-296px)]"
-                }`}>
-                <DndContext
-                    sensors={sensors}
-                    onDragStart={onDragStart}
-                    onDragEnd={onDragEnd}
-                    onDragOver={onDragOver}>
-                    <SortableContext items={columnsId}>
-                        {columns.map((col) => (
-                            <ColumnContainer
-                                key={col.id}
-                                column={col}
-                                deleteTask={deleteTask}
-                                updateTask={updateTask}
-                                tasks={tasks.filter(
-                                    (task) => task.status === col.id
-                                )}
-                            />
-                        ))}
-                    </SortableContext>
-
-                    {createPortal(
-                        <DragOverlay>
-                            {activeTask && (
-                                <TaskCard
-                                    task={activeTask}
+            <>
+                <div
+                    className={`overflow-x-scroll no-scrollbar md:show-scrollbar items md:cursor-all-scroll xl:cursor-default px-4 md:px-8 mt-6 md:mt-12 flex justify-between gap-x-5 ${
+                        activeMenu && "lg:w-[calc(100vw-296px)]"
+                    }`}>
+                    <DndContext
+                        sensors={sensors}
+                        onDragStart={onDragStart}
+                        onDragEnd={onDragEnd}
+                        onDragOver={onDragOver}>
+                        <SortableContext items={columnsId}>
+                            {columns.map((col) => (
+                                <ColumnContainer
+                                    key={col.id}
+                                    column={col}
                                     deleteTask={deleteTask}
                                     updateTask={updateTask}
+                                    tasks={tasks.filter(
+                                        (task) => task.status === col.id
+                                    )}
                                 />
-                            )}
-                        </DragOverlay>,
-                        document.body
-                    )}
-                </DndContext>
-            </div>
+                            ))}
+                        </SortableContext>
+
+                        {createPortal(
+                            <DragOverlay>
+                                {activeTask && (
+                                    <TaskCard
+                                        task={activeTask}
+                                        deleteTask={deleteTask}
+                                        updateTask={updateTask}
+                                    />
+                                )}
+                            </DragOverlay>,
+                            document.body
+                        )}
+                    </DndContext>
+                </div>
+                <Toaster />
+            </>
         );
 
     function deleteTask(id) {

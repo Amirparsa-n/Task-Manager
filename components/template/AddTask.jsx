@@ -6,7 +6,7 @@ import RadioButton from "../element/RadioButton";
 // Icons
 import CloseIconCircle from "../icons/CloseIconCircle";
 
-const AddTask = ({ addTaskInfo, setAddTaskInfo }) => {
+const AddTask = ({ setAddTaskInfo }) => {
     const { setShowAddTaskModal } = useContext(stateContext);
 
     const [message, setMessage] = useState("")
