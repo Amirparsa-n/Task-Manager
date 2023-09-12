@@ -32,12 +32,26 @@ const Cols = [
     },
 ];
 
+const defaultsTask = [
+    {
+        status: "done",
+    },
+    {
+        status: "todo",
+    },
+    {
+        status: "review",
+    },
+    {
+        status: "in-progress",
+    },
+];
+
 function TaskContainer() {
     const { activeMenu } = useContext(stateContext);
 
     const [columns, setColumns] = useState(Cols);
     const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
-    // const [tasks, setTasks] = useState(defaultTasks);
     const [activeColumn, setActiveColumn] = useState(null);
     const [activeTask, setActiveTask] = useState(null);
     const sensors = useSensors(
@@ -59,6 +73,8 @@ function TaskContainer() {
         const data = await res.json();
         setTasks(data.data);
     };
+
+    console.log(tasks);
 
     useEffect(() => {
         const slider = document.querySelector(".items");
@@ -89,48 +105,44 @@ function TaskContainer() {
         });
     }, []);
 
-    console.log(tasks);
-
     if (tasks)
         return (
-            <div className="overflow-x-scroll no-scrollbar md:show-scrollbar items md:cursor-all-scroll xl:cursor-default">
-                <div
-                    className={`px-4 md:px-8 mt-6 md:mt-12 flex justify-between gap-x-5 ${
-                        activeMenu && "md:w-[calc(100vw-296px)]"
-                    }`}>
-                    <DndContext
-                        sensors={sensors}
-                        onDragStart={onDragStart}
-                        onDragEnd={onDragEnd}
-                        onDragOver={onDragOver}>
-                        <SortableContext items={columnsId}>
-                            {columns.map((col) => (
-                                <ColumnContainer
-                                    key={col.id}
-                                    column={col}
+            <div
+                className={`overflow-x-scroll no-scrollbar md:show-scrollbar items md:cursor-all-scroll xl:cursor-default px-4 md:px-8 mt-6 md:mt-12 flex justify-between gap-x-5 ${
+                    activeMenu && "lg:w-[calc(100vw-296px)]"
+                }`}>
+                <DndContext
+                    sensors={sensors}
+                    onDragStart={onDragStart}
+                    onDragEnd={onDragEnd}
+                    onDragOver={onDragOver}>
+                    <SortableContext items={columnsId}>
+                        {columns.map((col) => (
+                            <ColumnContainer
+                                key={col.id}
+                                column={col}
+                                deleteTask={deleteTask}
+                                updateTask={updateTask}
+                                tasks={tasks.filter(
+                                    (task) => task.status === col.id
+                                )}
+                            />
+                        ))}
+                    </SortableContext>
+
+                    {createPortal(
+                        <DragOverlay>
+                            {activeTask && (
+                                <TaskCard
+                                    task={activeTask}
                                     deleteTask={deleteTask}
                                     updateTask={updateTask}
-                                    tasks={tasks.filter(
-                                        (task) => task.status === col.id
-                                    )}
                                 />
-                            ))}
-                        </SortableContext>
-
-                        {createPortal(
-                            <DragOverlay>
-                                {activeTask && (
-                                    <TaskCard
-                                        task={activeTask}
-                                        deleteTask={deleteTask}
-                                        updateTask={updateTask}
-                                    />
-                                )}
-                            </DragOverlay>,
-                            document.body
-                        )}
-                    </DndContext>
-                </div>
+                            )}
+                        </DragOverlay>,
+                        document.body
+                    )}
+                </DndContext>
             </div>
         );
 
@@ -210,7 +222,6 @@ function TaskContainer() {
                 const overIndex = tasks.findIndex((t) => t._id === overId);
 
                 if (tasks[activeIndex].status !== tasks[overIndex].status) {
-                    // Fix introduced after video recording
                     tasks[activeIndex].status = tasks[overIndex].status;
                     return arrayMove(tasks, activeIndex, overIndex - 1);
                 }
@@ -220,12 +231,10 @@ function TaskContainer() {
         }
 
         const isOverAColumn = over.data.current?.type === "Column";
-
         // I'm dropping a Task over a column
         if (isActiveATask && isOverAColumn) {
             setTasks((tasks) => {
-                const activeIndex = tasks.findIndex((t) => t.id === activeId);
-
+                const activeIndex = tasks.findIndex((t) => t._id === activeId);
                 tasks[activeIndex].status = overId;
                 console.log("DROPPING TASK OVER COLUMN", { activeIndex });
                 return arrayMove(tasks, activeIndex, activeIndex);

@@ -3,7 +3,6 @@ import connectDB from "@/utils/connectDB";
 import Joi from "joi";
 import { authOptions } from "./auth/[...nextauth]";
 import { getServerSession } from "next-auth";
-import { sortTodos } from "@/utils/sortTodos";
 
 export default async function handler(req, res) {
     try {
@@ -52,9 +51,6 @@ export default async function handler(req, res) {
 
         res.status(201).json({ status: "success", message: "Todo created!" })
     } else if (req.method === "GET") {
-        // console.log(user.todos);
-        // const sortData = sortTodos(user.todos)
-
         res.status(200).json({data: user.todos})
     }
 

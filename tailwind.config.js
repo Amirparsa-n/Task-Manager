@@ -38,6 +38,10 @@ module.exports = {
         done: '#FF8A00',
       },
 
+      screens: {
+        '3xl': '1800px',
+      },
+
       boxShadow: {
         'button': '0 3px 15px -1px rgba(62, 123, 250, 0.8)',
         'MobileNavigationBar': '0 0 15px 1px rgba(0, 0, 0, 0.22) ',
