@@ -9,6 +9,7 @@ function ColumnContainer({
     tasks,
     deleteTask,
     updateTask,
+    editTaskStatus,
 }) {
 
     const tasksIds = useMemo(() => {
@@ -56,6 +57,7 @@ function ColumnContainer({
                                 task={task}
                                 deleteTask={deleteTask}
                                 updateTask={updateTask}
+                                editTaskStatus={editTaskStatus}
                             />
                         ))}
                     </SortableContext>

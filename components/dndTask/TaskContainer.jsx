@@ -14,6 +14,8 @@ import TaskCard from "./TaskCard";
 import { stateContext } from "@/contexts/ContextProvide";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/router";
+import { useTheme } from "next-themes";
+import axios from "axios";
 
 const Cols = [
     {
@@ -36,7 +38,8 @@ const Cols = [
 
 function TaskContainer() {
     const { activeMenu, addTaskInfo } = useContext(stateContext);
-    const router = useRouter()
+    const [editTaskStatus, setEditTaskStatus] = useState({});
+    const router = useRouter();
     const [columns, setColumns] = useState(Cols);
     const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
     const [activeColumn, setActiveColumn] = useState(null);
@@ -48,13 +51,15 @@ function TaskContainer() {
             },
         })
     );
+    const { theme } = useTheme();
+
     const [isUpdate, setIsUpdate] = useState(false);
     const [tasks, setTasks] = useState([]);
     const [updateStatusData, setUpdateStatusData] = useState(null);
 
     useEffect(() => {
         fetchTodos();
-    }, [addTaskInfo]);
+    }, [addTaskInfo, editTaskStatus]);
 
     const fetchTodos = async () => {
         const res = await fetch("/api/tasks");
@@ -74,7 +79,16 @@ function TaskContainer() {
         });
         const data = await res.json();
         if (data.status === "failed") {
-            toast.error(data.message);
+            if (theme === "light") {
+                toast.error(data.message);
+            } else {
+                toast.error(data.message, {
+                    style: {
+                        background: "#2e2e2e",
+                        color: "#fff",
+                    },
+                });
+            }
             setTimeout(() => {
                 router.reload();
             }, 600);
@@ -88,15 +102,26 @@ function TaskContainer() {
         }
     }, [isUpdate]);
 
-
-    async function updateTask(id, {title, description}) {
+    async function updateTask(id, { title, description }) {
         const res = await fetch("/api/tasks", {
             method: "PATCH",
             body: JSON.stringify({ id, title, description }),
             headers: { "Content-Type": "application/json" },
         });
         const data = await res.json();
-        console.log(data);
+        setEditTaskStatus(data);
+        if (data.status === "success") {
+            if (theme === 'light') {
+                toast.success(data.message);
+            } else {
+                toast.success(data.message, {
+                    style: {
+                        background: "#2e2e2e",
+                        color: "#fff",
+                    },
+                });
+            }
+        }
     }
 
     useEffect(() => {
@@ -147,6 +172,7 @@ function TaskContainer() {
                                     column={col}
                                     deleteTask={deleteTask}
                                     updateTask={updateTask}
+                                    editTaskStatus={editTaskStatus}
                                     tasks={tasks.filter(
                                         (task) => task.status === col.id
                                     )}
@@ -161,6 +187,7 @@ function TaskContainer() {
                                         task={activeTask}
                                         deleteTask={deleteTask}
                                         updateTask={updateTask}
+                                        // editTaskStatus={editTaskStatus}
                                     />
                                 )}
                             </DragOverlay>,
