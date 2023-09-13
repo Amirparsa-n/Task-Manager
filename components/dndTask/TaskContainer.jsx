@@ -15,7 +15,6 @@ import { stateContext } from "@/contexts/ContextProvide";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useTheme } from "next-themes";
-import axios from "axios";
 
 const Cols = [
     {
@@ -38,7 +37,6 @@ const Cols = [
 
 function TaskContainer() {
     const { activeMenu, addTaskInfo } = useContext(stateContext);
-    const [editTaskStatus, setEditTaskStatus] = useState({});
     const router = useRouter();
     const [columns, setColumns] = useState(Cols);
     const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
@@ -59,7 +57,7 @@ function TaskContainer() {
 
     useEffect(() => {
         fetchTodos();
-    }, [addTaskInfo, editTaskStatus]);
+    }, [addTaskInfo]);
 
     const fetchTodos = async () => {
         const res = await fetch("/api/tasks");
@@ -109,9 +107,9 @@ function TaskContainer() {
             headers: { "Content-Type": "application/json" },
         });
         const data = await res.json();
-        setEditTaskStatus(data);
         if (data.status === "success") {
-            if (theme === 'light') {
+            fetchTodos();
+            if (theme === "light") {
                 toast.success(data.message);
             } else {
                 toast.success(data.message, {
@@ -121,7 +119,50 @@ function TaskContainer() {
                     },
                 });
             }
+        } else if (data.status === "failed") {
+            if (theme === "light") {
+                toast.error(data.message);
+            } else {
+                toast.error(data.message, {
+                    style: {
+                        background: "#2e2e2e",
+                        color: "#fff",
+                    },
+                });
+            }
         }
+    }
+
+    async function deleteTask(id) {
+        const res = await fetch(`/api/tasks/${id}`, {
+            method: "DELETE",
+        });
+        const data = await res.json();
+        fetchTodos();
+        if (data.status === "success") {
+            if (theme === "light") {
+                toast.success(data.message);
+            } else {
+                toast.success(data.message, {
+                    style: {
+                        background: "#2e2e2e",
+                        color: "#fff",
+                    },
+                });
+            }
+        } else if (data.status === "failed") {
+            if (theme === "light") {
+                toast.error(data.message);
+            } else {
+                toast.error(data.message, {
+                    style: {
+                        background: "#2e2e2e",
+                        color: "#fff",
+                    },
+                });
+            }
+        }
+        console.log(data);
     }
 
     useEffect(() => {
@@ -172,7 +213,6 @@ function TaskContainer() {
                                     column={col}
                                     deleteTask={deleteTask}
                                     updateTask={updateTask}
-                                    editTaskStatus={editTaskStatus}
                                     tasks={tasks.filter(
                                         (task) => task.status === col.id
                                     )}
@@ -187,7 +227,6 @@ function TaskContainer() {
                                         task={activeTask}
                                         deleteTask={deleteTask}
                                         updateTask={updateTask}
-                                        // editTaskStatus={editTaskStatus}
                                     />
                                 )}
                             </DragOverlay>,
@@ -198,11 +237,6 @@ function TaskContainer() {
                 <Toaster />
             </>
         );
-
-    function deleteTask(id) {
-        const newTasks = tasks.filter((task) => task.id !== id);
-        setTasks(newTasks);
-    }
 
     function onDragStart(event) {
         if (event.active.data.current?.type === "Column") {

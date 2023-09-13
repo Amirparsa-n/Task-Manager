@@ -4,6 +4,7 @@ import { CSS } from "@dnd-kit/utilities";
 import moment from "moment";
 import DotTask from "../icons/DotTask";
 import EditIcon from "../icons/EditIcon";
+import DeleteTaskIcon from "../icons/DeleteTaskIcon";
 
 function TaskCard({ task, deleteTask, updateTask }) {
     const [mouseIsOver, setMouseIsOver] = useState(false);
@@ -96,7 +97,6 @@ function TaskCard({ task, deleteTask, updateTask }) {
                         onClick={async () => {
                             await updateTask(task._id, { title, description });
                             setEditMode(false);
-                            
                         }}
                         className="flex border-[1.5px] border-primary hover:bg-primary hover:text-white transition-colors hover:transition-colors duration-300 hover:duration-200 w-full justify-center mt-[18px] items-center text-primary rounded-lg py-1">
                         Edit
@@ -146,7 +146,7 @@ function TaskCard({ task, deleteTask, updateTask }) {
                             {task.rating}
                         </div>
                     </div>
-                    {mouseIsOver && !editMode && (
+                    {mouseIsOver && (
                         <button
                             onClick={() => setEditMode(true)}
                             className="hidden md:block fadeInFast">
@@ -171,7 +171,27 @@ function TaskCard({ task, deleteTask, updateTask }) {
                     <span className="text-sm text-gray-500/50 dark:text-gray-500">
                         {moment(task.date).format("MMM Do")}
                     </span>
-                    <DotTask />
+
+                    <div className="flex items-center gap-x-4">
+                        {mouseIsOver && (
+                            <button
+                                type="button"
+                                className="fadeInFast hidden md:block"
+                                title="Delete Task"
+                                onClick={() => deleteTask(task._id)}>
+                                <DeleteTaskIcon />
+                            </button>
+                        )}
+                        <button
+                            type="button"
+                            className="md:hidden"
+                            title="Delete Task"
+                            onClick={() => deleteTask(task._id)}>
+                            <DeleteTaskIcon />
+                        </button>
+
+                        <DotTask />
+                    </div>
                 </div>
             </div>
         </div>
