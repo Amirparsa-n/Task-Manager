@@ -16,7 +16,7 @@ const userSchema = new Schema({
     lastName: String,
     expertise: String,
 
-    stickyWall: [{ title: String, text: String }],
+    stickyWall: [{ title: String, text: String, color: String }],
 
     todos: [
         {
