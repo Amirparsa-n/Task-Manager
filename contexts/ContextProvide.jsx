@@ -6,6 +6,7 @@ const ContextProvide = ({ children }) => {
     const [activeMenu, setActiveMenu] = useState(true);
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
     const [addTaskInfo, setAddTaskInfo] = useState([]);
+    const [showAddNoteModal, setShowAddNoteModal] = useState(false);
 
     return (
         <stateContext.Provider
@@ -16,6 +17,8 @@ const ContextProvide = ({ children }) => {
                 showAddTaskModal,
                 setAddTaskInfo,
                 addTaskInfo,
+                setShowAddNoteModal,
+                showAddNoteModal
             }}>
             {children}
         </stateContext.Provider>

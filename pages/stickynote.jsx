@@ -1,9 +1,12 @@
+import Navbar from "@/components/module/Navbar";
+import StickyNotePage from "@/components/template/StickyNotePage";
 
 const StickyNote = () => {
     return (
-        <div>
-            StickyNote
-        </div>
+        <>
+            <Navbar title="Sticky Wall" />
+            <StickyNotePage />
+        </>
     );
 };
 

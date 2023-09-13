@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import AddTaskInput from "../element/AddTaskInput";
 import { stateContext } from "@/contexts/ContextProvide";
-import RadioButton from "../element/RadioButton";
+import RadioButtonAddTask from "../element/RadioButtonAddTask";
 
 // Icons
 import CloseIconCircle from "../icons/CloseIconCircle";
@@ -9,8 +9,8 @@ import CloseIconCircle from "../icons/CloseIconCircle";
 const AddTask = ({ setAddTaskInfo }) => {
     const { setShowAddTaskModal } = useContext(stateContext);
 
-    const [message, setMessage] = useState("")
-    const [fadeOutAni, setFadeOutAni] = useState("")
+    const [message, setMessage] = useState("");
+    const [fadeOutAni, setFadeOutAni] = useState("");
     const [todoDate, setTodoData] = useState({
         title: "",
         description: "",
@@ -42,31 +42,32 @@ const AddTask = ({ setAddTaskInfo }) => {
 
     const addTaskHandler = async (e) => {
         e.preventDefault();
-        const res = await fetch('/api/tasks', {
-            method: 'POST',
+        const res = await fetch("/api/tasks", {
+            method: "POST",
             body: JSON.stringify(todoDate),
-            headers: {'Content-Type': 'application/json'},
-        })
+            headers: { "Content-Type": "application/json" },
+        });
         const data = await res.json();
-        setMessage(data)
+        setMessage(data);
 
-        if (data.status === 'success') {
+        if (data.status === "success") {
             setTimeout(() => {
                 setFadeOutAni("fadeOut");
-                setAddTaskInfo(data)
-            }, 1000)
+                setAddTaskInfo(data);
+            }, 1000);
             setTimeout(() => {
                 setShowAddTaskModal(false);
-            }, 1800)
+            }, 1800);
         }
-    }
+    };
 
     return (
         <>
             <div
-                className={`Modal md:z-[99999] h-[81%] md:h-full mt-[53px] md:pt-[57px] md:mt-0 md:bg-black/40 md:backdrop-blur-sm ${fadeOutAni}`}
+                className={`Modal md:z-[99999] md:h-full mt-[53px] md:pt-[57px] md:mt-0 md:bg-black/40 md:backdrop-blur-sm ${fadeOutAni}`}
                 id="main-image">
-                <div className={`md:m-auto md:max-w-2xl md:rounded-xl border-t-2 border-primary md:border-none transitionSidebar bg-white dark:bg-DarkSecond md:h-fit md:pt-6 px-4 md:px-8 py-6 slideInUp fadeIn `}>
+                <div
+                    className={`md:m-auto md:max-w-2xl h-[calc(100vh-124px)] md:rounded-xl border-t-2 border-primary md:border-none transitionSidebar bg-white dark:bg-DarkSecond md:h-fit md:pt-6 px-4 md:px-8 py-6 slideInUp fadeIn `}>
                     <div className="flex justify-between items-center">
                         <h3 className="text-lg font-[500] text-primary">
                             Add Task
@@ -96,7 +97,7 @@ const AddTask = ({ setAddTaskInfo }) => {
 
                         <div className="flex justify-evenly flex-wrap gap-y-4 mt-6">
                             {status.map((statusItem) => (
-                                <RadioButton
+                                <RadioButtonAddTask
                                     key={statusItem.id}
                                     name={"status"}
                                     value={statusItem.value}
@@ -109,7 +110,7 @@ const AddTask = ({ setAddTaskInfo }) => {
                         <hr className="block h-[1px] border-t-1 border-[#DFDFDF]" />
                         <div className="flex justify-evenly flex-wrap gap-y-4">
                             {rating.map((ratingItem) => (
-                                <RadioButton
+                                <RadioButtonAddTask
                                     key={ratingItem.id}
                                     name={"rating"}
                                     value={ratingItem.value}
@@ -122,7 +123,14 @@ const AddTask = ({ setAddTaskInfo }) => {
 
                         <div className="text-center mt-4 h-6">
                             {message && (
-                                <p className={message.status === 'failed' ? 'text-red-600' : 'text-green-600'}>{message.message}</p>
+                                <p
+                                    className={
+                                        message.status === "failed"
+                                            ? "text-red-600"
+                                            : "text-green-600"
+                                    }>
+                                    {message.message}
+                                </p>
                             )}
                         </div>
 

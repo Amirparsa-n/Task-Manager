@@ -1,4 +1,4 @@
-const RadioButton = ({ value, title, todoDate, setTodoData, name }) => {
+const RadioButtonAddTask = ({ value, title, todoDate, setTodoData, name }) => {
     return (
         <div
             className={`flex gap-x-2 items-center py-2 rounded-lg px-2 ${
@@ -27,4 +27,4 @@ const RadioButton = ({ value, title, todoDate, setTodoData, name }) => {
     );
 };
 
-export default RadioButton;
+export default RadioButtonAddTask;

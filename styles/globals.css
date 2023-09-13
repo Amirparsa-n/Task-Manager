@@ -465,3 +465,62 @@
     cursor: -webkit-grabbing;
     transform: scale(1);
 }
+
+
+#RadioButtonAddNote .check {
+    cursor: pointer;
+    position: relative;
+    margin: auto;
+    width: 24px;
+    height: 24px;
+    -webkit-tap-highlight-color: transparent;
+    transform: translate3d(0, 0, 0);
+}
+
+#RadioButtonAddNote .check:before {
+    content: "";
+    height: 64px;
+    opacity: 0;
+}
+
+#RadioButtonAddNote .check svg {
+    position: relative;
+    z-index: 1;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #ffffff;
+    stroke-width: 2;
+    transform: translate3d(0, 0, 0);
+    transition: all 0.2s ease;
+}
+
+#RadioButtonAddNote .check svg path {
+    stroke-dasharray: 60;
+    stroke-dashoffset: 0;
+}
+
+#RadioButtonAddNote .check svg polyline {
+    stroke-dasharray: 22;
+    stroke-dashoffset: 66;
+}
+
+#RadioButtonAddNote .check:hover:before {
+    opacity: 1;
+}
+
+
+#RadioButtonAddNote .radioInput:checked+.check svg {
+    stroke: var(--accent-color, #ffffff);
+}
+
+#RadioButtonAddNote .radioInput:checked+.check svg path {
+    stroke-dashoffset: 60;
+    transition: all 0.3s linear;
+}
+
+#RadioButtonAddNote .radioInput:checked+.check svg polyline {
+    stroke-dashoffset: 42;
+    transition: all 0.2s linear;
+    transition-delay: 0.15s;
+}

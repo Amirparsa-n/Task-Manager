@@ -37,6 +37,11 @@ module.exports = {
         inProgress: '#AA5BDA',
         review: '#0063F7',
         done: '#FF8A00',
+        yellowNote: '#FFCE0A',
+        greenNote: '#81DC76',
+        pinkNote: '#EA86C2',
+        purpleNote: '#CE9BFF',
+        blueNote: '#59C0E7',
       },
 
       screens: {
