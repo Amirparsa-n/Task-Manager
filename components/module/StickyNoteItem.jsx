@@ -3,11 +3,19 @@ import { useEffect, useState } from "react";
 import DeleteNoteIcon from "../icons/DeleteNoteIcon";
 import EditNoteIcon from "../icons/EditNoteIcon";
 
-const StickyNoteItem = ({ title, text, color, id, updateStickyNote }) => {
+const StickyNoteItem = ({
+    title,
+    text,
+    color,
+    id,
+    updateStickyNote,
+    noteEditStatus,
+}) => {
     const [editMode, setEditMode] = useState(false);
 
     const [titleNote, setTitleNote] = useState(title);
     const [textNote, setTextNote] = useState(text);
+    const [clickEdit, setClickEdit] = useState(false);
 
     useEffect(() => {
         if (!editMode) {
@@ -15,6 +23,23 @@ const StickyNoteItem = ({ title, text, color, id, updateStickyNote }) => {
             setTextNote(text);
         }
     }, [editMode]);
+
+    // loading mode
+    if (!noteEditStatus && !editMode && clickEdit ) {
+        return (
+            <div
+                className={`h-72 col-span-12 stickyNoteContainer sm:col-span-6 lg:col-span-4 3xl:col-span-3 rounded-lg ${
+                    color === "yellow" && "bg-yellowNote"
+                }
+            ${color === "green" && "bg-greenNote"} ${
+                    color === "pink" && "bg-pinkNote"
+                } ${color === "purple" && "bg-purpleNote"} ${
+                    color === "blue" && "bg-blueNote"
+                }`}>
+                <div className="flex justify-center items-center h-full"><span className="loaderEditNote"></span></div>
+            </div>
+        );
+    }
 
     if (editMode)
         return (
@@ -63,12 +88,16 @@ const StickyNoteItem = ({ title, text, color, id, updateStickyNote }) => {
                     <div className="flex">
                         <button
                             onClick={() => setEditMode(false)}
-                            className="flex border-[1.5px] border-e-[0] border-red-500 hover:bg-red-500 hover:text-neutral-200 hover:bg-red-500/5 text-red-500 transition-colors hover:transition-colors duration-300 hover:duration-200 w-full justify-center mt-[18px] items-center rounded-s-lg py-1">
+                            className="flex border-[1.5px] border-e-[0] border-red-500 hover:bg-red-500 hover:text-neutral-200 text-red-500 transition-colors hover:transition-colors duration-300 hover:duration-200 w-full justify-center mt-[18px] items-center rounded-s-lg py-1">
                             Cancel
                         </button>
                         <button
                             onClick={() => {
-                                updateStickyNote(id, {title:titleNote,text:textNote});
+                                updateStickyNote(id, {
+                                    title: titleNote,
+                                    text: textNote,
+                                });
+                                setClickEdit(true);
                                 setEditMode(false);
                             }}
                             className="flex border-s-[0] border-[1.5px] border-neutral-200 hover:bg-neutral-200 transition-colors hover:transition-colors duration-300 hover:duration-200 w-full justify-center mt-[18px] items-center text-neutral-200 hover:text-neutral-700 rounded-e-lg py-1">

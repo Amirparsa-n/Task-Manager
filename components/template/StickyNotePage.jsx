@@ -14,6 +14,7 @@ const StickyNotePage = () => {
     const { setShowAddNoteModal, addNoteInfo } = useContext(stateContext);
     const { theme } = useTheme();
     const [noteData, setNoteData] = useState([]);
+    const [noteEditStatus, setNoteEditStatus] = useState("");
 
     useEffect(() => {
         fetchStickyNote();
@@ -26,12 +27,14 @@ const StickyNotePage = () => {
     };
 
     async function updateStickyNote(id, { title, text }) {
+        setNoteEditStatus("");
         const res = await fetch("/api/notes", {
             method: "PATCH",
             body: JSON.stringify({ id, title, text }),
             headers: { "Content-Type": "application/json" },
         });
         const data = await res.json();
+        setNoteEditStatus(data.status)
         if (data.status === "success") {
             fetchStickyNote();
 
@@ -71,6 +74,7 @@ const StickyNotePage = () => {
                         color={note.color}
                         id={note._id}
                         updateStickyNote={updateStickyNote}
+                        noteEditStatus={noteEditStatus}
                     />
                 ))}
 
