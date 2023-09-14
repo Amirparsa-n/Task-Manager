@@ -54,8 +54,8 @@ const Navbar = ({ title }) => {
     };
 
     return (
-        <div className="sticky top-0" id="navbar">
-            <div className="bg-[#F8FAFA] dark:bg-DarkSecond drop-shadow-md flex justify-between items-center py-2 md:py-4 px-4 sm:px-8 z-[100000000]">
+        <div className="sticky top-0 z-[100]" id="navbar">
+            <div className="bg-[#F8FAFA] dark:bg-DarkSecond drop-shadow-md flex justify-between items-center py-2 md:py-4 px-4 sm:px-8 ">
                 <div className="flex gap-x-8 items-center">
                     <button
                         className="hidden md:block"

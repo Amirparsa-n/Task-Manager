@@ -1,5 +1,6 @@
 // icons
 import { useContext, useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 // context
 import AddIconStickyNote from "../icons/AddIconStickyNote";
@@ -7,9 +8,11 @@ import { stateContext } from "@/contexts/ContextProvide";
 
 // components
 import StickyNoteItem from "../module/StickyNoteItem";
+import toast, { Toaster } from "react-hot-toast";
 
 const StickyNotePage = () => {
     const { setShowAddNoteModal, addNoteInfo } = useContext(stateContext);
+    const { theme } = useTheme();
     const [noteData, setNoteData] = useState([]);
 
     useEffect(() => {
@@ -22,18 +25,52 @@ const StickyNotePage = () => {
         setNoteData(data.data);
     };
 
-    console.log(noteData);
+    async function updateStickyNote(id, { title, text }) {
+        const res = await fetch("/api/notes", {
+            method: "PATCH",
+            body: JSON.stringify({ id, title, text }),
+            headers: { "Content-Type": "application/json" },
+        });
+        const data = await res.json();
+        if (data.status === "success") {
+            fetchStickyNote();
+
+            if (theme === "light") {
+                toast.success(data.message);
+            } else {
+                toast.success(data.message, {
+                    style: {
+                        background: "#2e2e2e",
+                        color: "#fff",
+                    },
+                });
+            }
+        } else if (data.status === "failed") {
+            if (theme === "light") {
+                toast.error(data.message);
+            } else {
+                toast.error(data.message, {
+                    style: {
+                        background: "#2e2e2e",
+                        color: "#fff",
+                    },
+                });
+            }
+        }
+    }
 
     return (
-        <div className="px-4 mt-6 md:mt-10">
+        <>
+        <div className="px-4 mt-6 md:mt-10 ">
             <div className="grid grid-cols-12 gap-y-8 gap-x-6">
                 {noteData.map((note) => (
                     <StickyNoteItem
-                        key={note.id}
+                        key={note._id}
                         title={note.title}
                         text={note.text}
                         color={note.color}
                         id={note._id}
+                        updateStickyNote={updateStickyNote}
                     />
                 ))}
 
@@ -45,6 +82,8 @@ const StickyNotePage = () => {
                 </button>
             </div>
         </div>
+        <Toaster/>
+        </>
     );
 };
 
