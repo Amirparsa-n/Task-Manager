@@ -10,8 +10,10 @@ const StickyNoteItem = ({
     id,
     updateStickyNote,
     noteEditStatus,
+    deleteStickyNote,
 }) => {
     const [editMode, setEditMode] = useState(false);
+    const [deleteMode, setDeleteMode] = useState(false);
 
     const [titleNote, setTitleNote] = useState(title);
     const [textNote, setTextNote] = useState(text);
@@ -25,7 +27,7 @@ const StickyNoteItem = ({
     }, [editMode]);
 
     // loading mode
-    if (!noteEditStatus && !editMode && clickEdit ) {
+    if (!noteEditStatus && !editMode && clickEdit) {
         return (
             <div
                 className={`h-72 col-span-12 stickyNoteContainer sm:col-span-6 lg:col-span-4 3xl:col-span-3 rounded-lg ${
@@ -36,10 +38,33 @@ const StickyNoteItem = ({
                 } ${color === "purple" && "bg-purpleNote"} ${
                     color === "blue" && "bg-blueNote"
                 }`}>
-                <div className="flex justify-center items-center h-full"><span className="loaderEditNote"></span></div>
+                <div className="flex justify-center items-center h-full">
+                    <span className="loaderEditNote"></span>
+                </div>
             </div>
         );
     }
+
+    if (deleteMode)
+        return (
+            <div
+                className={`h-72 col-span-12 stickyNoteContainer sm:col-span-6 lg:col-span-4 3xl:col-span-3 rounded-lg ${
+                    color === "yellow" && "bg-yellowNote"
+                }
+            ${color === "green" && "bg-greenNote"} ${
+                    color === "pink" && "bg-pinkNote"
+                } ${color === "purple" && "bg-purpleNote"} ${
+                    color === "blue" && "bg-blueNote"
+                }`}>
+                <div className="px-5 py-6 flex flex-col gap-y-4 justify-center items-center h-full">
+                    <p className="text-lg text-neutral-800 text-center">Are you sure to remove?</p>
+                    <div className="flex gap-x-3">
+                        <button onClick={() => setDeleteMode(false)} className="text-white border border-white py-2 px-4 rounded-full hover:bg-slate-200/20 transition-colors">Cancel</button>
+                        <button onClick={() => deleteStickyNote(id)} className="text-red-500 border border-red-500 py-2 px-4 rounded-full hover:bg-red-500 hover:text-white transition-colors duration-300a">Delete</button>
+                    </div>
+                </div>
+            </div>
+        );
 
     if (editMode)
         return (
@@ -64,6 +89,7 @@ const StickyNoteItem = ({
                             <button
                                 type="button"
                                 className=""
+                                onClick={() => setDeleteMode(true)}
                                 title="Delete Task">
                                 <DeleteNoteIcon />
                             </button>
@@ -124,7 +150,11 @@ const StickyNoteItem = ({
                         {title}
                     </h3>
                     <div className="md:hidden flex fadeInFast md:absolute right-5 flex-col gap-y-2 stickyNoteBtn">
-                        <button type="button" className="" title="Delete Task">
+                        <button
+                            type="button"
+                            onClick={() => setDeleteMode(true)}
+                            className=""
+                            title="Delete Task">
                             <DeleteNoteIcon />
                         </button>
                         <button

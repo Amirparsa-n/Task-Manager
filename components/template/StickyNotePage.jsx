@@ -34,7 +34,7 @@ const StickyNotePage = () => {
             headers: { "Content-Type": "application/json" },
         });
         const data = await res.json();
-        setNoteEditStatus(data.status)
+        setNoteEditStatus(data.status);
         if (data.status === "success") {
             fetchStickyNote();
 
@@ -62,31 +62,61 @@ const StickyNotePage = () => {
         }
     }
 
+    async function deleteStickyNote(id) {
+        const res = await fetch(`/api/notes/${id}`, { method: "DELETE" });
+        const data = await res.json();
+        if (data.status === "success") {
+            fetchStickyNote();
+            if (theme === "light") {
+                toast.success(data.message);
+            } else {
+                toast.success(data.message, {
+                    style: {
+                        background: "#2e2e2e",
+                        color: "#fff",
+                    },
+                });
+            }
+        } else if (data.status === "failed") {
+            if (theme === "light") {
+                toast.error(data.message);
+            } else {
+                toast.error(data.message, {
+                    style: {
+                        background: "#2e2e2e",
+                        color: "#fff",
+                    },
+                });
+            }
+        }
+    }
+
     return (
         <>
-        <div className="px-4 mt-6 md:mt-10 ">
-            <div className="grid grid-cols-12 gap-y-8 gap-x-6">
-                {noteData.map((note) => (
-                    <StickyNoteItem
-                        key={note._id}
-                        title={note.title}
-                        text={note.text}
-                        color={note.color}
-                        id={note._id}
-                        updateStickyNote={updateStickyNote}
-                        noteEditStatus={noteEditStatus}
-                    />
-                ))}
+            <div className="px-4 mt-6 md:mt-10 ">
+                <div className="grid grid-cols-12 gap-y-8 gap-x-6">
+                    {noteData.map((note) => (
+                        <StickyNoteItem
+                            key={note._id}
+                            title={note.title}
+                            text={note.text}
+                            color={note.color}
+                            id={note._id}
+                            updateStickyNote={updateStickyNote}
+                            noteEditStatus={noteEditStatus}
+                            deleteStickyNote={deleteStickyNote}
+                        />
+                    ))}
 
-                <button
-                    type="button"
-                    onClick={() => setShowAddNoteModal(true)}
-                    className="bg-[#EBEBEB] h-72 col-span-12 sm:col-span-6 md:col-span-4 3xl:col-span-3 w-full rounded-lg flex justify-center items-center">
-                    <AddIconStickyNote />
-                </button>
+                    <button
+                        type="button"
+                        onClick={() => setShowAddNoteModal(true)}
+                        className="bg-[#EBEBEB] h-72 col-span-12 sm:col-span-6 lg:col-span-4 3xl:col-span-3 w-full rounded-lg flex justify-center items-center">
+                        <AddIconStickyNote />
+                    </button>
+                </div>
             </div>
-        </div>
-        <Toaster/>
+            <Toaster />
         </>
     );
 };
