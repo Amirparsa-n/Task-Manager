@@ -3,7 +3,6 @@ import connectDB from "@/utils/connectDB";
 import Joi from "joi";
 import { authOptions } from "../auth/[...nextauth]";
 import { getServerSession } from "next-auth";
-import { ObjectId } from "mongoose";
 
 export default async function handler(req, res) {
     if (req.method !== "DELETE") return;
@@ -56,10 +55,12 @@ export default async function handler(req, res) {
 
 
     try {
-        const newTasks = user.todos.filter((task) => task.id !== value);
-        user.todos = newTasks;
-        user.save();
-        
+        await User.updateOne(
+            {_id : user.id},
+            { $pull: { todos: { _id: value } } },
+            { new: true },
+        );
+
         res.status(200).json({
             status: "success",
             message: "Delete Task Successfully!",
