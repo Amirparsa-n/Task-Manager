@@ -6,7 +6,7 @@ import CloseIconCircle from "../icons/CloseIconCircle";
 import RadioButtonAddNote from "../element/RadioButtonAddNote";
 import { headers } from "@/next.config";
 
-const AddNote = ({}) => {
+const AddNote = ({ setAddNoteInfo }) => {
     const { setShowAddNoteModal } = useContext(stateContext);
 
     const [message, setMessage] = useState("");
@@ -38,6 +38,7 @@ const AddNote = ({}) => {
         if (data.status === "success") {
             setTimeout(() => {
                 setFadeOutAni("fadeOut");
+                setAddNoteInfo(data.status)
             }, 1000);
             setTimeout(() => {
                 setShowAddNoteModal(false);
@@ -111,7 +112,7 @@ const AddNote = ({}) => {
                             ))}
                         </div>
 
-                        <div className="text-center mt-4 h-6">
+                        <div className="text-center mt-4 max-h-[34px]">
                             {message && (
                                 <p
                                     className={

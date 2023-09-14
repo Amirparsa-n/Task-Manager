@@ -16,7 +16,8 @@ const BottomNavigation = () => {
     const router = useRouter();
     const pathname = router.pathname;
 
-    const { setShowAddTaskModal, showAddTaskModal } = useContext(stateContext);
+    const { setShowAddTaskModal, setShowAddNoteModal } =
+        useContext(stateContext);
 
     return (
         <div className="md:hidden z-40 bg-[#F8FAFA] dark:bg-DarkSecond fixed bottom-0 w-full h-[80px] rounded-t-xl shadow-[0_4px_15px_2px_rgba(0,0,0,0.2)]">
@@ -24,7 +25,9 @@ const BottomNavigation = () => {
                 <Link href={"/profile"}>
                     <div className="flex flex-col items-center">
                         <ProfileBottomNav />
-                        <span className="text-[12px] mt-2 dark:text-gray-300">Profile</span>
+                        <span className="text-[12px] mt-2 dark:text-gray-300">
+                            Profile
+                        </span>
                         {pathname === "/profile" && (
                             <div className="absolute bottom-0 with-shadow">
                                 <SelectShapeBottomNav />
@@ -36,7 +39,9 @@ const BottomNavigation = () => {
                 <Link href={"/project"}>
                     <div className="flex flex-col items-center">
                         <ProjectBottomNav />
-                        <span className="text-[12px] mt-2 dark:text-gray-300">Project</span>
+                        <span className="text-[12px] mt-2 dark:text-gray-300">
+                            Project
+                        </span>
                         {pathname === "/project" && (
                             <div className="absolute bottom-0 with-shadow">
                                 <SelectShapeBottomNav />
@@ -45,17 +50,30 @@ const BottomNavigation = () => {
                     </div>
                 </Link>
 
-                <button
-                    type="button"
-                    onClick={() => setShowAddTaskModal(!showAddTaskModal)}
-                    className="flex flex-col items-center justify-center ">
-                    <AddBottomNav />
-                </button>
+                {pathname === "/stickynote" && (
+                    <button
+                        type="button"
+                        onClick={() => setShowAddNoteModal(prev => !prev)}
+                        className="flex flex-col items-center justify-center ">
+                        <AddBottomNav />
+                    </button>
+                )}
+
+                {pathname === "/" && (
+                    <button
+                        type="button"
+                        onClick={() => setShowAddTaskModal(prev => !prev)}
+                        className="flex flex-col items-center justify-center ">
+                        <AddBottomNav />
+                    </button>
+                )}
 
                 <Link href={"/stickynote"}>
                     <div className="flex flex-col items-center">
                         <NoteBottomNav />
-                        <span className="text-[12px] mt-2 dark:text-gray-300">Note</span>
+                        <span className="text-[12px] mt-2 dark:text-gray-300">
+                            Note
+                        </span>
                         {pathname === "/stickynote" && (
                             <div className="absolute bottom-0 with-shadow">
                                 <SelectShapeBottomNav />
@@ -67,7 +85,9 @@ const BottomNavigation = () => {
                 <Link href={"/"}>
                     <div className="flex flex-col items-center">
                         <TaskBottomNav />
-                        <span className="text-[12px] mt-2 dark:text-gray-300">Task</span>
+                        <span className="text-[12px] mt-2 dark:text-gray-300">
+                            Task
+                        </span>
                         {pathname === "/" && (
                             <div className="absolute bottom-0 with-shadow">
                                 <SelectShapeBottomNav />

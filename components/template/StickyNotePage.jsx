@@ -1,21 +1,49 @@
-
 // icons
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 // context
 import AddIconStickyNote from "../icons/AddIconStickyNote";
 import { stateContext } from "@/contexts/ContextProvide";
 
-const StickyNotePage = () => {
+// components
+import StickyNoteItem from "../module/StickyNoteItem";
 
-    const {setShowAddNoteModal} = useContext(stateContext)
+const StickyNotePage = () => {
+    const { setShowAddNoteModal, addNoteInfo } = useContext(stateContext);
+    const [noteData, setNoteData] = useState([]);
+
+    useEffect(() => {
+        fetchStickyNote();
+    }, [addNoteInfo]);
+
+    const fetchStickyNote = async () => {
+        const res = await fetch("/api/notes");
+        const data = await res.json();
+        setNoteData(data.data);
+    };
+
+    console.log(noteData);
 
     return (
         <div className="px-4 mt-6 md:mt-10">
-            
-            <button type="button" onClick={() => setShowAddNoteModal(true)} className="bg-[#EBEBEB] h-72 w-full rounded-lg flex justify-center items-center">
-                <AddIconStickyNote />
-            </button>
+            <div className="grid grid-cols-12 gap-y-8 gap-x-6">
+                {noteData.map((note) => (
+                    <StickyNoteItem
+                        key={note.id}
+                        title={note.title}
+                        text={note.text}
+                        color={note.color}
+                        id={note._id}
+                    />
+                ))}
+
+                <button
+                    type="button"
+                    onClick={() => setShowAddNoteModal(true)}
+                    className="bg-[#EBEBEB] h-72 col-span-12 sm:col-span-6 md:col-span-4 3xl:col-span-3 w-full rounded-lg flex justify-center items-center">
+                    <AddIconStickyNote />
+                </button>
+            </div>
         </div>
     );
 };

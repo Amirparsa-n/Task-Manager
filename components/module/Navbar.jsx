@@ -10,12 +10,16 @@ import Hamburger from "../element/Hamburger";
 import AddIconNavbar from "../icons/AddIconNavbar";
 import ProfileNavbar from "../icons/ProfileNavbar";
 import { useTheme } from "next-themes";
+import { useRouter } from "next/router";
 
 const Navbar = ({ title }) => {
-    const { activeMenu, setActiveMenu, setShowAddTaskModal } =
+    const { activeMenu, setActiveMenu, setShowAddTaskModal, setShowAddNoteModal } =
         useContext(stateContext);
     const [windowWidth, setWindowWidth] = useState(null);
     const { theme, setTheme } = useTheme();
+
+    const router = useRouter();
+    const pathname = router.pathname;
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -107,13 +111,24 @@ const Navbar = ({ title }) => {
                     </label>
                 </div>
 
-                <div className="hidden md:flex gap-x-10">
-                    <button
-                        onClick={() => setShowAddTaskModal(true)}
-                        className="flex bg-primary text-white py-2 rounded-xl gap-x-3 items-center px-3 hover:shadow-lg hover:shadow-primary/30 transition-shadow duration-300 hover:transition-shadow hover:first-letter:duration-200">
-                        Add
-                        <AddIconNavbar />
-                    </button>
+            <div className="hidden md:flex gap-x-10">
+                    {pathname === "/stickynote" && (
+                        <button
+                            onClick={() => setShowAddNoteModal(true)}
+                            className="flex bg-primary text-white py-2 rounded-xl gap-x-3 items-center px-3 hover:shadow-lg hover:shadow-primary/30 transition-shadow duration-300 hover:transition-shadow hover:first-letter:duration-200">
+                            Add
+                            <AddIconNavbar />
+                        </button>
+                    )}
+
+                    {pathname === "/" && (
+                        <button
+                            onClick={() => setShowAddTaskModal(true)}
+                            className="flex bg-primary text-white py-2 rounded-xl gap-x-3 items-center px-3 hover:shadow-lg hover:shadow-primary/30 transition-shadow duration-300 hover:transition-shadow hover:first-letter:duration-200">
+                            Add
+                            <AddIconNavbar />
+                        </button>
+                    )}
 
                     <Link href={"/profile"}>
                         <ProfileNavbar />
