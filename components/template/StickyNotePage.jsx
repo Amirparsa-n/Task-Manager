@@ -111,7 +111,7 @@ const StickyNotePage = () => {
                     <button
                         type="button"
                         onClick={() => setShowAddNoteModal(true)}
-                        className="bg-[#EBEBEB] h-72 col-span-12 sm:col-span-6 lg:col-span-4 3xl:col-span-3 w-full rounded-lg flex justify-center items-center">
+                        className="bg-[#EBEBEB] dark:bg-gray-600 h-72 col-span-12 sm:col-span-6 lg:col-span-4 3xl:col-span-3 w-full rounded-lg flex justify-center items-center">
                         <AddIconStickyNote />
                     </button>
                 </div>

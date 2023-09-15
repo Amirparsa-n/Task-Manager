@@ -6,6 +6,7 @@ function AddIconStickyNote() {
       <g
         fill="none"
         stroke="#292d32"
+        className="dark:stroke-gray-300"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="6"

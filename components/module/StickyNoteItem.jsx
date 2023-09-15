@@ -146,7 +146,7 @@ const StickyNoteItem = ({
             }`}>
             <div className="px-5 py-6 relative">
                 <div className="flex justify-between gap-x-2 mb-2">
-                    <h3 className="font-semibold w-fit text-lg md:text-xl text-slate-700 dark:text-slate-50 titleNote">
+                    <h3 className="font-semibold w-fit text-lg md:text-xl text-slate-700 dark:text-slate-100  titleNote">
                         {title}
                     </h3>
                     <div className="md:hidden flex fadeInFast md:absolute right-5 flex-col gap-y-2 stickyNoteBtn">
@@ -166,7 +166,7 @@ const StickyNoteItem = ({
                         </button>
                     </div>
                 </div>
-                <p className="text-gray-800 h-48 overflow-auto taskContainer">
+                <p className="text-gray-800 dark:text-slate-200  h-48 overflow-auto taskContainer">
                     {text}
                 </p>
             </div>

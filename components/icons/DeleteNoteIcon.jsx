@@ -3,7 +3,7 @@ import React from "react";
 function DeleteNoteIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22.537">
-      <g fill="#fbfbfb" className="hover:fill-red-400 transition-colors">
+      <g fill="#fbfbfb" className="hover:fill-red-400 transition-colors dark:fill-slate-700 dark:hover:fill-red-400">
         <path
           d="M5.614 0H2.293A2.108 2.108 0 000 2.293v3.321a2.108 2.108 0 002.293 2.293h3.321a2.108 2.108 0 002.293-2.293V2.293A2.108 2.108 0 005.614 0zm.565 5.151a.73.73 0 010 1.028.774.774 0 01-.52.2.747.747 0 01-.508-.2l-1.209-1.2-1.175 1.2a.761.761 0 01-.531.2.747.747 0 01-.508-.2.73.73 0 010-1.028l1.209-1.2L1.74 2.768A.727.727 0 112.768 1.74l1.175 1.2 1.2-1.2a.727.727 0 111.025 1.028L4.982 3.954z"
           data-name="Path 220"
