@@ -1,9 +1,12 @@
+import Navbar from "@/components/module/Navbar";
+import ProfilePage from "@/components/template/ProfilePage";
 
 const profile = () => {
     return (
-        <div>
-            profile
-        </div>
+        <>
+            <Navbar title="Profile" />
+            <ProfilePage />
+        </>
     );
 };
 
