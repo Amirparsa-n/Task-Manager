@@ -45,6 +45,7 @@ const ProfilePage = ({ data }) => {
     }
 
     const updateProfile = async () => {
+        setErrorMessage("")
         setIsLoading(true);
         const res = await fetch("/api/profile", {
             method: "PATCH",
@@ -114,14 +115,10 @@ const ProfilePage = ({ data }) => {
                                 className={`md:text-lg w-44 ${
                                     activeMenu ? "lg:w-44" : "lg:w-60"
                                 } xl:w-60 titleNote text-center`}>
-                                {profileDataDB
-                                    ? profileDataDB.firstName +
-                                      " " +
-                                      profileDataDB.lastName
-                                    : "your name"}
+                                {profileDataDB ? profileDataDB.firstName +" " +profileDataDB.lastName: "your name"}
                             </p>
                             <p className="text-sm text-gray-500">
-                                {profileDataDB.expertise
+                                {profileDataDB && profileDataDB.expertise
                                     ? profileDataDB.expertise
                                     : "your Expertise"}
                             </p>

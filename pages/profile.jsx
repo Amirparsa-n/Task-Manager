@@ -37,12 +37,17 @@ export async function getServerSideProps({ req, res }) {
     //     }
     // }
 
+    let profileDataDB;
+    if (user.firstName) {
+        profileDataDB = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            expertise: user.expertise,
+        } 
+    } else {
+        profileDataDB = null;
+    }
     
-    const profileDataDB = {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        expertise: user.expertise,
-    } 
 
 
     return {
