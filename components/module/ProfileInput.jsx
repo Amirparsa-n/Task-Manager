@@ -7,7 +7,7 @@ const ProfileInput = ({ label, type, profileData, setProfileData, name }) => {
                 id={label}
                 name={name}
                 className="rounded-lg 2xl:w-80 3xl:w-96 bg-transparent"
-                value={profileData.name}
+                value={profileData[name]}
                 onChange={(e) => setProfileData({...profileData, [name]: e.target.value})}
             />
         </div>
