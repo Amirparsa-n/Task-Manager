@@ -2,6 +2,9 @@ import { stateContext } from "@/contexts/ContextProvide";
 import Image from "next/image";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useTheme } from "next-themes";
+import { signOut } from "next-auth/react"
 
 // Elements
 import Hamburger from "../element/Hamburger";
@@ -9,12 +12,15 @@ import Hamburger from "../element/Hamburger";
 // Icons
 import AddIconNavbar from "../icons/AddIconNavbar";
 import ProfileNavbar from "../icons/ProfileNavbar";
-import { useTheme } from "next-themes";
-import { useRouter } from "next/router";
+import LogoutIcon from "../icons/logoutIcon";
 
 const Navbar = ({ title }) => {
-    const { activeMenu, setActiveMenu, setShowAddTaskModal, setShowAddNoteModal } =
-        useContext(stateContext);
+    const {
+        activeMenu,
+        setActiveMenu,
+        setShowAddTaskModal,
+        setShowAddNoteModal,
+    } = useContext(stateContext);
     const [windowWidth, setWindowWidth] = useState(null);
     const { theme, setTheme } = useTheme();
 
@@ -111,7 +117,7 @@ const Navbar = ({ title }) => {
                     </label>
                 </div>
 
-            <div className="hidden md:flex gap-x-10">
+                <div className="hidden md:flex gap-x-10">
                     {pathname === "/stickynote" && (
                         <button
                             onClick={() => setShowAddNoteModal(true)}
@@ -130,9 +136,19 @@ const Navbar = ({ title }) => {
                         </button>
                     )}
 
-                    <Link href={"/profile"}>
-                        <ProfileNavbar />
-                    </Link>
+                    {pathname === "/profile" ? (
+                        <button
+                            type="button"
+                            onClick={() => signOut()}
+                            className="btnLogout border border-primary rounded-xl px-4 py-[6px] text-primary flex gap-x-2 items-center hover:bg-primary hover:text-white transition-colors hover:transition-colors duration-300 hover:duration-200">
+                            <span>Logout</span>
+                            <LogoutIcon />
+                        </button>
+                    ) : (
+                        <Link href={"/profile"}>
+                            <ProfileNavbar />
+                        </Link>
+                    )}
                 </div>
             </div>
         </div>

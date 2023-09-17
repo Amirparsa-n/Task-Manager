@@ -649,3 +649,7 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+
+.btnLogout:hover .logoutIcon {
+    fill: #fff;
+}
