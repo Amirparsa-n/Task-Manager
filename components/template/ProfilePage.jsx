@@ -2,10 +2,12 @@ import { useContext, useState } from "react";
 import { stateContext } from "@/contexts/ContextProvide";
 import toast, { Toaster } from "react-hot-toast";
 import { useTheme } from "next-themes";
+import { signOut } from "next-auth/react";
 
 // icons
 import ProfileEditIcon from "../icons/ProfileEditIcon";
 import EditProfileInput from "../icons/EditProfileInput";
+import LogoutIconMobile from "../icons/logoutIconMobile";
 
 // components
 import ProfileInput from "../module/ProfileInput";
@@ -45,7 +47,7 @@ const ProfilePage = ({ data }) => {
     }
 
     const updateProfile = async () => {
-        setErrorMessage("")
+        setErrorMessage("");
         setIsLoading(true);
         const res = await fetch("/api/profile", {
             method: "PATCH",
@@ -80,7 +82,14 @@ const ProfilePage = ({ data }) => {
 
     return (
         <>
-            <div className="profileContainer h-[200px] 3xl:h-[300px] relative flex justify-center ">
+            <div className="profileContainer h-[200px] 3xl:h-[300px] relative flex justify-center">
+                <button
+                    type="button"
+                    onClick={() => signOut()}
+                    className="md:hidden btnLogout absolute right-4 top-5 border border-white rounded-xl px-4 py-[6px] text-white flex gap-x-2 items-center hover:bg-primary hover:text-white transition-colors hover:transition-colors duration-300 hover:duration-200">
+                    <span>Logout</span>
+                    <LogoutIconMobile />
+                </button>
                 <div
                     className={`mt-20 md:mt-32 3xl:mt-48 mb-40 md:mb-0 h-[820px] md:h-fit flex gap-x-2 md:gap-x-4 lg:gap-x-8 ${
                         activeMenu && "lg:gap-x-2"
@@ -115,7 +124,11 @@ const ProfilePage = ({ data }) => {
                                 className={`md:text-lg w-44 ${
                                     activeMenu ? "lg:w-44" : "lg:w-60"
                                 } xl:w-60 titleNote text-center`}>
-                                {profileDataDB ? profileDataDB.firstName +" " +profileDataDB.lastName: "your name"}
+                                {profileDataDB
+                                    ? profileDataDB.firstName +
+                                      " " +
+                                      profileDataDB.lastName
+                                    : "your name"}
                             </p>
                             <p className="text-sm text-gray-500">
                                 {profileDataDB && profileDataDB.expertise
