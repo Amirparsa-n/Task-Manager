@@ -67,6 +67,12 @@ export default async function handler(req, res) {
         } catch (e) {
             res.status(500).json({status: 'failed', message: 'Error creating project'})
         }
+    } else if (req.method === 'GET') {
+        let projectsNames = [];
+        for (let i = 0; i < user.project.length; i++) {
+            projectsNames.push({ id:user.project[i].id ,name: user.project[i].name });
+        }
+        res.status(200).json({status: 'success', data: projectsNames })
     }
 }
 
