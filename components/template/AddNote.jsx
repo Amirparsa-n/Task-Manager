@@ -6,8 +6,8 @@ import CloseIconCircle from "../icons/CloseIconCircle";
 import RadioButtonAddNote from "../element/RadioButtonAddNote";
 import { headers } from "@/next.config";
 
-const AddNote = ({ setAddNoteInfo }) => {
-    const { setShowAddNoteModal } = useContext(stateContext);
+const AddNote = () => {
+    const { setShowAddNoteModal, setAddNoteInfo } = useContext(stateContext);
 
     const [message, setMessage] = useState("");
     const [fadeOutAni, setFadeOutAni] = useState("");
@@ -28,6 +28,7 @@ const AddNote = ({ setAddNoteInfo }) => {
 
     const addNoteHandler = async (e) => {
         e.preventDefault();
+        setAddNoteInfo([])
         const res = await fetch('/api/notes', {
             method: 'POST',
             body: JSON.stringify(noteDate),

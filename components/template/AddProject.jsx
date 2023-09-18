@@ -6,8 +6,8 @@ import RadioButtonAddTask from "../element/RadioButtonAddTask";
 // Icons
 import CloseIconCircle from "../icons/CloseIconCircle";
 
-const AddProject = ({ setAddTaskInfo }) => {
-    const { setShowAddProjectModal } = useContext(stateContext);
+const AddProject = () => {
+    const { setShowAddProjectModal, setAddProjectInfo } = useContext(stateContext);
 
     const [message, setMessage] = useState("");
     const [fadeOutAni, setFadeOutAni] = useState("");
@@ -16,6 +16,7 @@ const AddProject = ({ setAddTaskInfo }) => {
     const addProjectHandler = async (e) => {
         e.preventDefault();
         setMessage("");
+        setAddProjectInfo([])
         const res = await fetch("/api/project", {
             method: "POST",
             body: JSON.stringify(projectName),
@@ -27,7 +28,7 @@ const AddProject = ({ setAddTaskInfo }) => {
         if (data.status === "success") {
             setTimeout(() => {
                 setFadeOutAni("fadeOut");
-                // setAddTaskInfo(data);
+                setAddProjectInfo(data);
             }, 1000);
             setTimeout(() => {
                 setShowAddProjectModal(false);
@@ -65,7 +66,7 @@ const AddProject = ({ setAddTaskInfo }) => {
                             />
                         </div>
 
-                        <div className="text-center mt-4 h-6">
+                        <div className="text-center mt-4 min-h-[24px]">
                             {message && (
                                 <p
                                     className={

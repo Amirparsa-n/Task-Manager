@@ -56,8 +56,8 @@ const Layout = ({ children }) => {
                 </div>
             </div>
 
-            {showAddTaskModal && <AddTask setAddTaskInfo={setAddTaskInfo} />}
-            {showAddNoteModal && <AddNote setAddNoteInfo={setAddNoteInfo} />}
+            {showAddTaskModal && <AddTask />}
+            {showAddNoteModal && <AddNote />}
             {showAddProjectModal && <AddProject />}
         </div>
     );

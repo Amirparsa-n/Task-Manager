@@ -6,8 +6,8 @@ import RadioButtonAddTask from "../element/RadioButtonAddTask";
 // Icons
 import CloseIconCircle from "../icons/CloseIconCircle";
 
-const AddTask = ({ setAddTaskInfo }) => {
-    const { setShowAddTaskModal } = useContext(stateContext);
+const AddTask = () => {
+    const { setShowAddTaskModal, setAddTaskInfo } = useContext(stateContext);
 
     const [message, setMessage] = useState("");
     const [fadeOutAni, setFadeOutAni] = useState("");
@@ -42,6 +42,7 @@ const AddTask = ({ setAddTaskInfo }) => {
 
     const addTaskHandler = async (e) => {
         e.preventDefault();
+        setAddTaskInfo([]);
         const res = await fetch("/api/tasks", {
             method: "POST",
             headers: { "Content-Type": "application/json" },

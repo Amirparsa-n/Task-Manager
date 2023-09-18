@@ -653,3 +653,7 @@
 .btnLogout:hover .logoutIcon {
     fill: #fff;
 }
+
+.projectItem:hover .BoxIcon {
+    fill: #fff;
+}
