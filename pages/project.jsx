@@ -1,9 +1,10 @@
+import Navbar from "@/components/module/Navbar";
 
 const Project = () => {
     return (
-        <div>
-            Project
-        </div>
+        <>
+        <Navbar title="Project" />
+        </>
     );
 };
 

@@ -68,6 +68,14 @@ const BottomNavigation = () => {
                     </button>
                 )}
 
+                {pathname === "/project" && (
+                    <button
+                        type="button"
+                        onClick={() => setShowAddTaskModal(prev => !prev)}
+                        className="flex flex-col items-center justify-center ">
+                        <AddBottomNav />
+                    </button>
+                )}
                 <Link href={"/stickynote"}>
                     <div className="flex flex-col items-center">
                         <NoteBottomNav />
