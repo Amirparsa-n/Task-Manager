@@ -44,8 +44,8 @@ const AddTask = ({ setAddTaskInfo }) => {
         e.preventDefault();
         const res = await fetch("/api/tasks", {
             method: "POST",
-            body: JSON.stringify(todoDate),
             headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(todoDate),
         });
         const data = await res.json();
         setMessage(data);

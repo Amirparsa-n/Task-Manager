@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import AddBottomNav from "../icons/AddBottomNav";
 import NoteBottomNav from "../icons/NoteBottomNav";
 import ProfileBottomNav from "../icons/ProfileBottomNav";
@@ -16,8 +16,14 @@ const BottomNavigation = () => {
     const router = useRouter();
     const pathname = router.pathname;
 
-    const { setShowAddTaskModal, setShowAddNoteModal } =
+    const { setShowAddTaskModal, setShowAddNoteModal, setShowAddProjectModal } =
         useContext(stateContext);
+        
+    useEffect(() => {
+        setShowAddTaskModal(false)
+        setShowAddNoteModal(false)
+        setShowAddProjectModal(false)
+    }, [pathname])
 
     return (
         <div className="md:hidden z-40 bg-[#F8FAFA] dark:bg-DarkSecond fixed bottom-0 w-full h-[80px] rounded-t-xl shadow-[0_4px_15px_2px_rgba(0,0,0,0.2)]">
@@ -71,7 +77,7 @@ const BottomNavigation = () => {
                 {pathname === "/project" && (
                     <button
                         type="button"
-                        onClick={() => setShowAddTaskModal(prev => !prev)}
+                        onClick={() => setShowAddProjectModal(prev => !prev)}
                         className="flex flex-col items-center justify-center ">
                         <AddBottomNav />
                     </button>

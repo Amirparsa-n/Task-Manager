@@ -21,7 +21,7 @@ import Moon from "../icons/Moon";
 import CloseIcon from "../icons/closeIcon";
 
 const Sidebar = () => {
-    const { setActiveMenu } = useContext(stateContext);
+    const { setActiveMenu, setShowAddProjectModal } = useContext(stateContext);
     const router = useRouter();
     const pathname = router.pathname;
 
@@ -107,7 +107,7 @@ const Sidebar = () => {
             <div>
                 <div className="flex justify-between items-center">
                     <p className="text-[#A8A9AC]">Project</p>
-                    <button type="button">
+                    <button type="button" onClick={() => setShowAddProjectModal(true)}>
                         <AddProjectSidebar />
                     </button>
                 </div>
