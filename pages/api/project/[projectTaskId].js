@@ -28,7 +28,33 @@ export default async function handler(req, res) {
             .json({ status: "failed", message: "user not found" });
     }
 
-    const deleteSchema = Joi.string().required();
+    const projectNameSchema = Joi.string().required();
+
+    const { projectTaskId } = req.query;
+
+    const projectName = projectNameSchema.validate(projectTaskId);
+
+    if (projectName.error) {
+        console.log(projectName.error);
+        const { message } = projectName.error.details[0];
+        return res.status(422).json({ status: "failed", message });
+    }
+
+
+    const filteredProjects = await User.find(
+        {
+            "project.name": projectName.value,
+        },
+        {
+            "project.$": 1,
+        }
+    );
+    const [project] = filteredProjects.map((user) => user.project[0]);
+    if (!project) {
+        return res
+            .status(404)
+            .json({ status: "failed", message: "Project notFound!" });
+    }
 
     const taskProjectSchema = Joi.object({
         title: Joi.string().required().max(80),
@@ -40,42 +66,20 @@ export default async function handler(req, res) {
     });
 
     if (req.method === "POST") {
-        const { projectTaskId } = req.query;
-        const projectName = deleteSchema.validate(projectTaskId);
-
         const taskProject = taskProjectSchema.validate(req.body, {
             abortEarly: true,
-        });
-
-        if (projectName.error) {
-            console.log(projectName.error);
-            const { message } = projectName.error.details[0];
-            return res.status(422).json({ status: "failed", message });
-        }
+        });    
 
         if (taskProject.error) {
             console.log(taskProject.error);
             const { message } = taskProject.error.details[0];
             return res.status(422).json({ status: "failed", message });
         }
-
+    
         try {
-            const filteredProjects = await User.find(
-                {
-                    "project.name": projectName.value,
-                },
-                {
-                    "project.$": 1,
-                }
+            const projectIndex = user.project.findIndex(
+                (item) => item.name === project.name
             );
-            const [project] = filteredProjects.map((user) => user.project[0]);
-            if (!project) {
-                return res
-                    .status(404)
-                    .json({ status: "failed", message: "Project notFound!" });
-            }
-
-            const projectIndex = user.project.findIndex(item => item.name === project.name);
 
             user.project[projectIndex].todos.push(taskProject.value);
             user.save();
@@ -91,5 +95,7 @@ export default async function handler(req, res) {
                 message: "Error creating task project",
             });
         }
+    } else if (req.method === "GET") {
+        res.status(200).json({ data: project.todos });
     }
 }
