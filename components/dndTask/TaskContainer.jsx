@@ -1,5 +1,4 @@
 import { useContext, useEffect, useMemo, useState } from "react";
-// import { Column, Id, Task } from "../types";
 import ColumnContainer from "./ColumnContainer";
 import {
     DndContext,
@@ -12,8 +11,7 @@ import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import TaskCard from "./TaskCard";
 import { stateContext } from "@/contexts/ContextProvide";
-import toast, { Toaster } from "react-hot-toast";
-import { useRouter } from "next/router";
+import { Toaster } from "react-hot-toast";
 import { useTheme } from "next-themes";
 
 const Cols = [
@@ -35,9 +33,9 @@ const Cols = [
     },
 ];
 
-function TaskContainer() {
+function TaskContainer({ tasks, setTasks, UpdateStatus, updateTask, deleteTask }) {
     const { activeMenu, addTaskInfo } = useContext(stateContext);
-    const router = useRouter();
+    
     const [columns, setColumns] = useState(Cols);
     const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
     const [activeColumn, setActiveColumn] = useState(null);
@@ -52,47 +50,13 @@ function TaskContainer() {
     const { theme } = useTheme();
 
     const [isUpdate, setIsUpdate] = useState(false);
-    const [tasks, setTasks] = useState([]);
     const [updateStatusData, setUpdateStatusData] = useState(null);
 
-    useEffect(() => {
-        fetchTodos();
-    }, [addTaskInfo]);
-
-    const fetchTodos = async () => {
-        const res = await fetch("/api/tasks");
-        const data = await res.json();
-        setTasks(data.data);
-    };
 
     const changeStatus = async (id, status) => {
         setUpdateStatusData({ id, status });
     };
 
-    const UpdateStatus = async (id, status) => {
-        const res = await fetch("/api/tasks/changeStatus", {
-            method: "PATCH",
-            body: JSON.stringify({ id, status }),
-            headers: { "Content-Type": "application/json" },
-        });
-        const data = await res.json();
-        if (data.status === "failed") {
-            if (theme === "light") {
-                toast.error(data.message);
-            } else {
-                toast.error(data.message, {
-                    style: {
-                        background: "#2e2e2e",
-                        color: "#fff",
-                    },
-                });
-            }
-            setTimeout(() => {
-                router.reload();
-            }, 600);
-        }
-        console.log(data);
-    };
 
     useEffect(() => {
         if (isUpdate && updateStatusData) {
@@ -100,70 +64,6 @@ function TaskContainer() {
         }
     }, [isUpdate]);
 
-    async function updateTask(id, { title, description }) {
-        const res = await fetch("/api/tasks", {
-            method: "PATCH",
-            body: JSON.stringify({ id, title, description }),
-            headers: { "Content-Type": "application/json" },
-        });
-        const data = await res.json();
-        if (data.status === "success") {
-            fetchTodos();
-            if (theme === "light") {
-                toast.success(data.message);
-            } else {
-                toast.success(data.message, {
-                    style: {
-                        background: "#2e2e2e",
-                        color: "#fff",
-                    },
-                });
-            }
-        } else if (data.status === "failed") {
-            if (theme === "light") {
-                toast.error(data.message);
-            } else {
-                toast.error(data.message, {
-                    style: {
-                        background: "#2e2e2e",
-                        color: "#fff",
-                    },
-                });
-            }
-        }
-    }
-
-    async function deleteTask(id) {
-        const res = await fetch(`/api/tasks/${id}`, {
-            method: "DELETE",
-        });
-        const data = await res.json();
-        fetchTodos();
-        if (data.status === "success") {
-            if (theme === "light") {
-                toast.success(data.message);
-            } else {
-                toast.success(data.message, {
-                    style: {
-                        background: "#2e2e2e",
-                        color: "#fff",
-                    },
-                });
-            }
-        } else if (data.status === "failed") {
-            if (theme === "light") {
-                toast.error(data.message);
-            } else {
-                toast.error(data.message, {
-                    style: {
-                        background: "#2e2e2e",
-                        color: "#fff",
-                    },
-                });
-            }
-        }
-        console.log(data);
-    }
 
     useEffect(() => {
         const slider = document.querySelector(".items");
