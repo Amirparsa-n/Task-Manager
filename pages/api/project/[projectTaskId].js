@@ -40,7 +40,6 @@ export default async function handler(req, res) {
         return res.status(422).json({ status: "failed", message });
     }
 
-
     const filteredProjects = await User.find(
         {
             "project.name": projectName.value,
@@ -65,17 +64,23 @@ export default async function handler(req, res) {
         date: Joi.date().required(),
     });
 
+    const editSchema = Joi.object({
+        title: Joi.string().required().max(80),
+        description: Joi.string().optional().allow("").max(200),
+        id: Joi.string().required(),
+    });
+
     if (req.method === "POST") {
         const taskProject = taskProjectSchema.validate(req.body, {
             abortEarly: true,
-        });    
+        });
 
         if (taskProject.error) {
             console.log(taskProject.error);
             const { message } = taskProject.error.details[0];
             return res.status(422).json({ status: "failed", message });
         }
-    
+
         try {
             const projectIndex = user.project.findIndex(
                 (item) => item.name === project.name
@@ -97,5 +102,42 @@ export default async function handler(req, res) {
         }
     } else if (req.method === "GET") {
         res.status(200).json({ data: project.todos });
+    } else if (req.method === "PATCH") {
+        const { error, value } = editSchema.validate(req.body);
+
+        if (error) {
+            console.log(error);
+            const { message } = error.details[0];
+            return res.status(422).json({ status: "failed", message });
+        }
+
+        try {
+            await User.updateOne(
+                { "project.todos._id": value.id },
+                {
+                    $set: {
+                        "project.$[outer].todos.$[inner].title": value.title,
+                        "project.$[outer].todos.$[inner].description":
+                            value.description,
+                    },
+                },
+                {
+                    arrayFilters: [
+                        { "outer._id": project.id },
+                        { "inner._id": value.id },
+                    ],
+                }
+            );
+            res.status(201).json({
+                status: "success",
+                message: "Edit task successfully!",
+            });
+        } catch (e) {
+            console.log(e);
+            res.status(500).json({
+                status: "failed",
+                message: "Error in Edit task, Try again",
+            });
+        }
     }
 }
