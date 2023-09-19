@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useTheme } from "next-themes";
 
 // components
@@ -21,11 +21,25 @@ import Moon from "../icons/Moon";
 import CloseIcon from "../icons/closeIcon";
 
 const Sidebar = () => {
-    const { setActiveMenu, setShowAddProjectModal } = useContext(stateContext);
+    const { setActiveMenu, setShowAddProjectModal, addProjectInfo } =
+        useContext(stateContext);
+    const [projectsNameData, setProjectsNameData] = useState([]);
     const router = useRouter();
     const pathname = router.pathname;
+    const asPath = router.asPath;
 
     const { theme, setTheme } = useTheme();
+
+
+    useEffect(() => {
+        fetchProjectsNamesData();
+    }, [addProjectInfo])
+
+    const fetchProjectsNamesData = async () => {
+        const res = await fetch("/api/project");
+        const data = await res.json();
+        setProjectsNameData(data.data);
+    };
 
     const themeHandler = (e) => {
         if (e.target.checked) {
@@ -107,30 +121,30 @@ const Sidebar = () => {
             <div>
                 <div className="flex justify-between items-center">
                     <p className="text-[#A8A9AC]">Project</p>
-                    <button type="button" onClick={() => setShowAddProjectModal(true)}>
+                    <button
+                        type="button"
+                        onClick={() => setShowAddProjectModal(true)}>
                         <AddProjectSidebar />
                     </button>
                 </div>
 
-                <div className="mt-5 flex flex-col gap-y-[18px]">
-                    <SidebarItem
-                        title={"develop task"}
-                        link={"/dev"}
-                        icon={
-                            <ProjectSidebar
-                                color={pathname === "/dev" ? "#fff" : "#93949A"}
-                            />
-                        }
-                    />
-                    <SidebarItem
-                        title={"develop task"}
-                        link={"/dev"}
-                        icon={
-                            <ProjectSidebar
-                                color={pathname === "/dev" ? "#fff" : "#93949A"}
-                            />
-                        }
-                    />
+                <div className="mt-5 flex flex-col gap-y-[18px] h-[300px] overflow-auto taskContainer">
+                    {projectsNameData.map((item) => (
+                        <SidebarItem
+                            key={item.id}
+                            title={item.name}
+                            link={`/project/${item.name}`}
+                            icon={
+                                <ProjectSidebar
+                                    color={
+                                        asPath === `/project/${item.name}`
+                                            ? "#fff"
+                                            : "#93949A"
+                                    }
+                                />
+                            }
+                        />
+                    ))}
                 </div>
             </div>
 

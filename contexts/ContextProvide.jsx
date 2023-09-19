@@ -10,6 +10,7 @@ const ContextProvide = ({ children }) => {
     const [showAddNoteModal, setShowAddNoteModal] = useState(false);
     const [showAddProjectModal, setShowAddProjectModal] = useState(false);
     const [addProjectInfo, setAddProjectInfo] = useState([]);
+    const [showAddTaskProjectModal, setShowAddTaskProjectModal] = useState("");
 
     return (
         <stateContext.Provider
@@ -28,6 +29,8 @@ const ContextProvide = ({ children }) => {
                 showAddProjectModal,
                 setAddProjectInfo,
                 addProjectInfo,
+                setShowAddTaskProjectModal,
+                showAddTaskProjectModal,
             }}>
             {children}
         </stateContext.Provider>

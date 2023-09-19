@@ -18,14 +18,9 @@ const profile = ({ profileDataDB }) => {
 export default profile;
 
 export async function getServerSideProps({ req, res }) {
-    try {
-        await connectDB();
-    } catch (err) {
-        console.log(err);
-        return res
-            .status(500)
-            .json({ status: "failed", message: "Error in connecting to DB" });
-    }
+
+    await connectDB();
+
     
     const session = await getServerSession(req, res, authOptions);
     const user = await User.findOne({ email: session.user.email });

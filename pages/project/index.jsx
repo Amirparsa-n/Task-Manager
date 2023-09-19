@@ -2,7 +2,7 @@ import Navbar from "@/components/module/Navbar";
 import ProjectPage from "@/components/template/ProjectPage";
 import connectDB from "@/utils/connectDB";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]";
+import { authOptions } from "../api/auth/[...nextauth]";
 import User from "@/models/User";
 
 const Project = ({ projectsNames }) => {

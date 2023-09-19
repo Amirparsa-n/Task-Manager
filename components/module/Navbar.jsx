@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useTheme } from "next-themes";
-import { signOut } from "next-auth/react"
+import { signOut } from "next-auth/react";
 
 // Elements
 import Hamburger from "../element/Hamburger";
@@ -20,12 +20,14 @@ const Navbar = ({ title }) => {
         setActiveMenu,
         setShowAddTaskModal,
         setShowAddNoteModal,
+        setShowAddTaskProjectModal,
     } = useContext(stateContext);
     const [windowWidth, setWindowWidth] = useState(null);
     const { theme, setTheme } = useTheme();
 
     const router = useRouter();
     const pathname = router.pathname;
+    const query = router.query;
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -71,7 +73,10 @@ const Navbar = ({ title }) => {
                         }>
                         <Hamburger activeMenu={activeMenu} />
                     </button>
-                    <p className="text-lg font-semibold">{title}</p>
+                    <p
+                        className="text-lg font-semibold capitalize">
+                        {title}
+                    </p>
                 </div>
 
                 <div className="md:hidden">
@@ -130,6 +135,15 @@ const Navbar = ({ title }) => {
                     {pathname === "/" && (
                         <button
                             onClick={() => setShowAddTaskModal(true)}
+                            className="flex bg-primary text-white py-2 rounded-xl gap-x-3 items-center px-3 hover:shadow-lg hover:shadow-primary/30 transition-shadow duration-300 hover:transition-shadow hover:first-letter:duration-200">
+                            Add
+                            <AddIconNavbar />
+                        </button>
+                    )}
+
+                    {query.projectId && (
+                        <button
+                            onClick={() => setShowAddTaskProjectModal(query.projectId)}
                             className="flex bg-primary text-white py-2 rounded-xl gap-x-3 items-center px-3 hover:shadow-lg hover:shadow-primary/30 transition-shadow duration-300 hover:transition-shadow hover:first-letter:duration-200">
                             Add
                             <AddIconNavbar />

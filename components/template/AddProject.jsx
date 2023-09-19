@@ -23,6 +23,7 @@ const AddProject = () => {
             headers: { "Content-Type": "application/json" },
         });
         const data = await res.json();
+        console.log(data);
         setMessage(data);
 
         if (data.status === "success") {

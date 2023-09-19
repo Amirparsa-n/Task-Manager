@@ -11,9 +11,10 @@ import { ThemeProvider } from "next-themes";
 import AddTask from "../template/AddTask";
 import AddNote from "../template/AddNote";
 import AddProject from "../template/AddProject";
+import AddProjectTask from "../template/AddProjectTask";
 
 const Layout = ({ children }) => {
-    const { activeMenu, showAddTaskModal, setAddTaskInfo, showAddNoteModal, setAddNoteInfo, showAddProjectModal } = useContext(stateContext);
+    const { activeMenu, showAddTaskModal, showAddNoteModal, showAddProjectModal, showAddTaskProjectModal } = useContext(stateContext);
 
     const { data: session, status } = useSession();
 
@@ -59,6 +60,7 @@ const Layout = ({ children }) => {
             {showAddTaskModal && <AddTask />}
             {showAddNoteModal && <AddNote />}
             {showAddProjectModal && <AddProject />}
+            {showAddTaskProjectModal && <AddProjectTask />}
         </div>
     );
 };

@@ -6,8 +6,7 @@ import TaskSidebar from "../icons/TaskSidebar";
 const SidebarItem = ({ title, link, icon }) => {
 
     const router = useRouter();
-    const pathname = router.pathname;
-
+    const pathname = router.asPath;
     return (
         <>
             <Link href={link}>
