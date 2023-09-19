@@ -7,7 +7,7 @@ import RadioButtonAddTask from "../element/RadioButtonAddTask";
 import CloseIconCircle from "../icons/CloseIconCircle";
 
 const AddProjectTask = () => {
-    const { setShowAddTaskProjectModal,showAddTaskProjectModal } = useContext(stateContext);
+    const { setShowAddTaskProjectModal,showAddTaskProjectModal, setAddTaskProjectInfo } = useContext(stateContext);
 
     const [message, setMessage] = useState("");
     const [fadeOutAni, setFadeOutAni] = useState("");
@@ -49,12 +49,12 @@ const AddProjectTask = () => {
             body: JSON.stringify(taskProjectDate),
         });
         const data = await res.json();
-        console.log(data);
         setMessage(data);
 
         if (data.status === "success") {
             setTimeout(() => {
                 setFadeOutAni("fadeOut");
+                setAddTaskProjectInfo(data)
             }, 1000);
             setTimeout(() => {
                 setShowAddTaskProjectModal(false);

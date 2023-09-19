@@ -1,13 +1,15 @@
 import TaskContainer from "@/components/dndTask/TaskContainer";
 import Navbar from "@/components/module/Navbar";
 import { stateContext } from "@/contexts/ContextProvide";
+import User from "@/models/User";
+import connectDB from "@/utils/connectDB";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const ProjectItem = ({ projectName }) => {
-    const { addTaskInfo } = useContext(stateContext);
+    const { addTaskInfo, addTaskProjectInfo } = useContext(stateContext);
     const [tasks, setTasks] = useState([]);
 
     const router = useRouter();
@@ -16,7 +18,7 @@ const ProjectItem = ({ projectName }) => {
 
     useEffect(() => {
         fetchTodos();
-    }, [addTaskInfo, router.asPath]);
+    }, [addTaskInfo, router.asPath, addTaskProjectInfo]);
 
     const fetchTodos = async () => {
         const res = await fetch(`/api/project/${projectName}`);
@@ -84,10 +86,10 @@ const ProjectItem = ({ projectName }) => {
     }
 
     async function deleteTask(id) {
-        const res = await fetch('/api/project/deleteTask', {
+        const res = await fetch("/api/project/deleteTask", {
             method: "DELETE",
-            body: JSON.stringify({id, projectName}),
-            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ id, projectName }),
+            headers: { "Content-Type": "application/json" },
         });
         const data = await res.json();
         fetchTodos();
@@ -135,6 +137,24 @@ export default ProjectItem;
 
 export async function getServerSideProps(context) {
     const { projectId } = context.params;
+
+    await connectDB()
+
+    const filteredProjects = await User.find(
+        {
+            "project.name": projectId,
+        },
+        {
+            "project.$": 1,
+        }
+    );
+    const [project] = filteredProjects.map((user) => user.project[0]);
+
+    if (!project) {
+        return {
+            notFound: true,
+        };
+    }
 
     return {
         props: { projectName: projectId },
