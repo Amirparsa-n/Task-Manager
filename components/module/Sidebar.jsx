@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 
 // components
 import SidebarItem from "../element/SidebarItem";
+import SidebarProjectItem from "../element/sidebarProjectItem";
 
 // context
 import { stateContext } from "@/contexts/ContextProvide";
@@ -129,9 +130,10 @@ const Sidebar = () => {
 
                 <div className="mt-5 flex flex-col gap-y-[18px] h-[calc(100vh-500px)] overflow-auto taskContainer">
                     {projectsNameData.map((item) => (
-                        <SidebarItem
+                        <SidebarProjectItem
                             key={item.id}
                             title={item.name}
+                            id={item.id}
                             link={`/project/${item.name}`}
                             icon={
                                 <ProjectSidebar
@@ -147,7 +149,9 @@ const Sidebar = () => {
                 </div>
             </div>
 
-            <div className="absolute w-full bottom-2 left-0" id="darkModHandler">
+            <div
+                className="absolute w-full bottom-2 left-0"
+                id="darkModHandler">
                 <input
                     type="checkbox"
                     id="switch"

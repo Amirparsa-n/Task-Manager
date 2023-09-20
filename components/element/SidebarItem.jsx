@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import TaskSidebar from "../icons/TaskSidebar";
-
 const SidebarItem = ({ title, link, icon }) => {
 
     const router = useRouter();
@@ -17,9 +15,6 @@ const SidebarItem = ({ title, link, icon }) => {
                             : "hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 hover:duration-150 hover:transition-colors rounded-xl cursor-pointer"
                     }>
                     <div className="flex gap-x-3 px-5 py-3">
-                        {/* <TaskSidebar
-                            color={pathname === "/" ? "#fff" : "#93949A"}
-                        /> */}
                         <span>{icon}</span>
                         <p
                             className={

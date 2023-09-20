@@ -74,7 +74,7 @@ const Navbar = ({ title }) => {
                         <Hamburger activeMenu={activeMenu} />
                     </button>
                     <p
-                        className="text-lg font-semibold capitalize">
+                        className="text-lg font-semibold capitalize line-clamp-1 w-48 titleNote">
                         {title}
                     </p>
                 </div>
