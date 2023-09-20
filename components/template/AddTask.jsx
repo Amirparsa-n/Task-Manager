@@ -65,10 +65,10 @@ const AddTask = () => {
     return (
         <>
             <div
-                className={`Modal md:z-[99999] md:h-screen mt-[53px] md:mt-0 md:bg-black/40 md:backdrop-blur-sm flex items-center justify-center ${fadeOutAni}`}
+                className={`Modal md:z-[99999] h-full md:h-screen mt-[53px] md:mt-0 md:bg-black/40 md:backdrop-blur-sm md:flex md:items-center md:justify-center  ${fadeOutAni}`}
                 id="main-image">
                 <div
-                    className={`md:m-auto md:max-w-2xl w-full h-[calc(100vh-124px)] md:rounded-xl border-t-2 border-primary md:border-none transitionSidebar bg-white dark:bg-DarkSecond md:h-fit md:pt-6 px-4 md:px-8 py-6 slideInUp fadeIn `}>
+                    className={`md:m-auto md:max-w-2xl w-full pb-[160px] md:pb-6 md:rounded-xl border-t-2 border-primary md:border-none transitionSidebar bg-white dark:bg-DarkSecond md:h-fit md:pt-6 px-4 md:px-8 py-6 slideInUp fadeIn `}>
                     <div className="flex justify-between items-center">
                         <h3 className="text-lg font-[500] text-primary">
                             Add Task

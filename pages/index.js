@@ -1,6 +1,7 @@
 import TaskContainer from "@/components/dndTask/TaskContainer";
 import Navbar from "@/components/module/Navbar";
 import { stateContext } from "@/contexts/ContextProvide";
+import connectDB from "@/utils/connectDB";
 import { getSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/router";
@@ -135,6 +136,7 @@ export async function getServerSideProps({ req }) {
             },
         };
     }
+    await connectDB()
 
     return {
         props: { user: session.user },

@@ -15,15 +15,22 @@ import { stateContext } from "@/contexts/ContextProvide";
 const BottomNavigation = () => {
     const router = useRouter();
     const pathname = router.pathname;
+    const query = router.query;
 
-    const { setShowAddTaskModal, setShowAddNoteModal, setShowAddProjectModal } =
-        useContext(stateContext);
-        
+    const {
+        setShowAddTaskModal,
+        setShowAddNoteModal,
+        setShowAddProjectModal,
+        setShowAddTaskProjectModal,
+        showAddTaskProjectModal
+    } = useContext(stateContext);
+
     useEffect(() => {
-        setShowAddTaskModal(false)
-        setShowAddNoteModal(false)
-        setShowAddProjectModal(false)
-    }, [pathname])
+        setShowAddTaskModal(false);
+        setShowAddNoteModal(false);
+        setShowAddProjectModal(false);
+        setShowAddTaskProjectModal(false);
+    }, [pathname]);
 
     return (
         <div className="md:hidden z-40 bg-[#F8FAFA] dark:bg-DarkSecond fixed bottom-0 w-full h-[80px] rounded-t-xl shadow-[0_4px_15px_2px_rgba(0,0,0,0.2)]">
@@ -48,7 +55,7 @@ const BottomNavigation = () => {
                         <span className="text-[12px] mt-2 dark:text-gray-300">
                             Project
                         </span>
-                        {pathname === "/project" && (
+                        {pathname === "/project" || query.projectId  && (
                             <div className="absolute bottom-0 with-shadow">
                                 <SelectShapeBottomNav />
                             </div>
@@ -59,7 +66,7 @@ const BottomNavigation = () => {
                 {pathname === "/stickynote" && (
                     <button
                         type="button"
-                        onClick={() => setShowAddNoteModal(prev => !prev)}
+                        onClick={() => setShowAddNoteModal((prev) => !prev)}
                         className="flex flex-col items-center justify-center ">
                         <AddBottomNav />
                     </button>
@@ -68,7 +75,7 @@ const BottomNavigation = () => {
                 {pathname === "/" && (
                     <button
                         type="button"
-                        onClick={() => setShowAddTaskModal(prev => !prev)}
+                        onClick={() => setShowAddTaskModal((prev) => !prev)}
                         className="flex flex-col items-center justify-center ">
                         <AddBottomNav />
                     </button>
@@ -77,10 +84,31 @@ const BottomNavigation = () => {
                 {pathname === "/project" && (
                     <button
                         type="button"
-                        onClick={() => setShowAddProjectModal(prev => !prev)}
+                        onClick={() => setShowAddProjectModal((prev) => !prev)}
                         className="flex flex-col items-center justify-center ">
                         <AddBottomNav />
                     </button>
+                )}
+
+                {query.projectId && (
+                    <>
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setShowAddTaskProjectModal(query.projectId)
+                            }
+                            className={`flex flex-col items-center justify-center ${showAddTaskProjectModal && 'hidden'}`}>
+                            <AddBottomNav />
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setShowAddTaskProjectModal(false)
+                            }
+                            className={`flex flex-col items-center justify-center ${!showAddTaskProjectModal && 'hidden'}`}>
+                            <AddBottomNav />
+                        </button>
+                    </>
                 )}
                 <Link href={"/stickynote"}>
                     <div className="flex flex-col items-center">

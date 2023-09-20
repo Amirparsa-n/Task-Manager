@@ -19,7 +19,7 @@ const ProjectPage = ({ projectsNames }) => {
     };
 
     return (
-        <div className="px-4 md:px-8 mt-8 flex flex-col gap-y-8 md:flex-row md:justify-between">
+        <div className="px-4 md:px-8 mt-8 flex flex-col gap-y-8 md:flex-row md:flex-wrap md:gap-x-8 md:justify-between">
             {projectsNameData.map((item) => (
                 <Link href={`/project/${item.name}`} key={item.id}>
                     <div className="projectItem bg-white dark:bg-DarkSecond hover:bg-primary hover:text-white dark:hover:bg-primary transition-colors duration-500 hover:duration-300 hover:transition-colors shadow-button shadow-gray-600/30 dark:shadow-gray-800/50 py-4 px-4 rounded-xl flex gap-x-3">
