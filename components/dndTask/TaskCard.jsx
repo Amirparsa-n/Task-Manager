@@ -122,7 +122,7 @@ function TaskCard({ task, deleteTask, updateTask }) {
             style={style}
             {...attributes}
             {...listeners}
-            className="bg-bgSecond dark:bg-DarkSecond rounded-xl cursor-default"
+            className="bg-bgSecond dark:bg-DarkSecond rounded-xl cursor-grab"
             onMouseEnter={() => {
                 setMouseIsOver(true);
             }}

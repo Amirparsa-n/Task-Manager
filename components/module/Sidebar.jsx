@@ -30,10 +30,9 @@ const Sidebar = () => {
 
     const { theme, setTheme } = useTheme();
 
-
     useEffect(() => {
         fetchProjectsNamesData();
-    }, [addProjectInfo])
+    }, [addProjectInfo]);
 
     const fetchProjectsNamesData = async () => {
         const res = await fetch("/api/project");
@@ -128,7 +127,7 @@ const Sidebar = () => {
                     </button>
                 </div>
 
-                <div className="mt-5 flex flex-col gap-y-[18px] h-[300px] overflow-auto taskContainer">
+                <div className="mt-5 flex flex-col gap-y-[18px] h-[calc(100vh-500px)] overflow-auto taskContainer">
                     {projectsNameData.map((item) => (
                         <SidebarItem
                             key={item.id}
@@ -148,9 +147,7 @@ const Sidebar = () => {
                 </div>
             </div>
 
-            <div
-                className="absolute w-full bottom-2 left-0"
-                id="darkModHandler">
+            <div className="absolute w-full bottom-2 left-0" id="darkModHandler">
                 <input
                     type="checkbox"
                     id="switch"
