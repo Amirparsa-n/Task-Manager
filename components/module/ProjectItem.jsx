@@ -5,7 +5,7 @@ import BoxIcon from "../icons/boxIcon";
 import TrashIcon from "../icons/TrashIcon";
 import Link from "next/link";
 
-const ProjectItem = ({ name, id }) => {
+const ProjectItem = ({ name, id, deleteProject }) => {
     const [deleteMode, setDeleteMode] = useState(false);
 
     if (deleteMode)
@@ -25,7 +25,7 @@ const ProjectItem = ({ name, id }) => {
                     </button>
                     <button
                         type="button"
-                        onClick={() => setDeleteMode(true)}
+                        onClick={() => deleteProject(id)}
                         className="text-sm border border-red-500 rounded-lg px-2 text-red-500 py-[3.2px] hover:bg-red-500 hover:text-white transition-colors hover:transition-colors">
                         Yes
                     </button>

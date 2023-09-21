@@ -20,6 +20,7 @@ import ProjectSidebar from "../icons/ProjectSidebar";
 import Sun from "../icons/Sun";
 import Moon from "../icons/Moon";
 import CloseIcon from "../icons/closeIcon";
+import toast, { Toaster } from "react-hot-toast";
 
 const Sidebar = () => {
     const { setActiveMenu, setShowAddProjectModal, addProjectInfo } =
@@ -78,6 +79,39 @@ const Sidebar = () => {
         },
     ];
 
+    const deleteProject = async (id) => {
+        const res = await fetch("/api/project", {
+            method: "DELETE",
+            body: JSON.stringify({ id }),
+            headers: { "Content-Type": "application/json" },
+        });
+        const data = await res.json();
+        if (data.status === "success") {
+            fetchProjectsNamesData();
+            if (theme === "light") {
+                toast.success(data.message);
+            } else {
+                toast.success(data.message, {
+                    style: {
+                        background: "#2e2e2e",
+                        color: "#fff",
+                    },
+                });
+            }
+        } else if (data.status === "failed") {
+            if (theme === "light") {
+                toast.error(data.message);
+            } else {
+                toast.error(data.message, {
+                    style: {
+                        background: "#2e2e2e",
+                        color: "#fff",
+                    },
+                });
+            }
+        }
+    };
+
     return (
         <div className="h-screen hidden md:block px-6 pt-5 md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
             <div className="flex items-center justify-between">
@@ -135,6 +169,7 @@ const Sidebar = () => {
                             title={item.name}
                             id={item.id}
                             link={`/project/${item.name}`}
+                            deleteProject={deleteProject}
                             icon={
                                 <ProjectSidebar
                                     color={

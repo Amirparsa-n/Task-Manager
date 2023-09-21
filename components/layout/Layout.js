@@ -12,6 +12,7 @@ import AddTask from "../template/AddTask";
 import AddNote from "../template/AddNote";
 import AddProject from "../template/AddProject";
 import AddProjectTask from "../template/AddProjectTask";
+import { Toaster } from "react-hot-toast";
 
 const Layout = ({ children }) => {
     const { activeMenu, showAddTaskModal, showAddNoteModal, showAddProjectModal, showAddTaskProjectModal } = useContext(stateContext);
@@ -61,6 +62,7 @@ const Layout = ({ children }) => {
             {showAddNoteModal && <AddNote />}
             {showAddProjectModal && <AddProject />}
             {showAddTaskProjectModal && <AddProjectTask />}
+            <Toaster/>
         </div>
     );
 };

@@ -3,11 +3,10 @@ import { useRouter } from "next/router";
 import TrashIcon from "../icons/TrashIcon";
 import { useState } from "react";
 
-const SidebarProjectItem = ({ title, link, icon, id }) => {
+const SidebarProjectItem = ({ title, link, icon, id, deleteProject }) => {
     const [mouseIsOver, setMouseIsOver] = useState(false);
     const router = useRouter();
     const pathname = router.asPath;
-    console.log(title);
 
     const [deleteMode, setDeleteMode] = useState(false);
 
@@ -44,7 +43,7 @@ const SidebarProjectItem = ({ title, link, icon, id }) => {
                         </button>
                         <button
                             type="button"
-                            onClick={() => setDeleteMode(true)}
+                            onClick={() => deleteProject(id)}
                             className={`text-sm border border-red-500 rounded-lg px-2 py-[1.2px] transition-colors hover:transition-colors ${pathname === link ? 'bg-red-500 text-white hover:bg-transparent hover:text-red-500' : 'text-red-500 hover:bg-red-500 hover:text-white'}`}>
                             Yes
                         </button>
