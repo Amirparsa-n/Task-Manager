@@ -27,6 +27,8 @@ const SignUpPage = () => {
         setMessage(data);
         if (data.status === "success") {
             router.replace("/signin");
+            setEmail("");
+            setPassword("");
         } else {
             setSignUpLoading(false);
         }

@@ -19,7 +19,7 @@ const AddProjectTask = () => {
         rating: "low",
         date: "",
     });
-    console.log(taskProjectDate);
+    const [addProjectLoading, setAddNoteLoading] = useState(false)
 
     const forms = [
         { id: 0, label: "Title *", name: "title", type: "text" },
@@ -43,6 +43,8 @@ const AddProjectTask = () => {
 
     const addTaskProjectHandler = async (e) => {
         e.preventDefault();
+        setMessage("");
+        setAddNoteLoading(true);
         const res = await fetch(`/api/project/${showAddTaskProjectModal}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -50,7 +52,7 @@ const AddProjectTask = () => {
         });
         const data = await res.json();
         setMessage(data);
-
+        setAddNoteLoading(false);
         if (data.status === "success") {
             setTimeout(() => {
                 setFadeOutAni("fadeOut");
@@ -137,9 +139,10 @@ const AddProjectTask = () => {
 
                         <button
                             type="submit"
+                            disabled={addProjectLoading}
                             onClick={addTaskProjectHandler}
-                            className="bg-primary py-3 text-white rounded-xl mb-4 md:mb-0 hover:shadow-button hover:transition-shadow duration-500 hover:duration-300">
-                            Add
+                            className="bg-primary py-3 text-white rounded-xl mb-4 md:mb-0 flex items-center gap-x-2 justify-center hover:shadow-button hover:transition-shadow duration-500 hover:duration-300">
+                            Add {addProjectLoading && <span className="loader"></span>}
                         </button>
                     </form>
                 </div>

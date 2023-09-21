@@ -27,9 +27,9 @@ const SignInPage = () => {
             redirect: false,
         });
         setMessage(res);
-        setEmail("");
-        setPassword("");
         if (!res.error) {
+            setEmail("");
+            setPassword("");
             router.replace('/')
         } else {
             setSignUpLoading(false)

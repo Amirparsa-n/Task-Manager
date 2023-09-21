@@ -16,6 +16,7 @@ const AddNote = () => {
         text: "",
         color: "",
     });
+    const [addNoteLoading, setAddNoteLoading] = useState(false)
 
 
     const color = [
@@ -28,6 +29,7 @@ const AddNote = () => {
 
     const addNoteHandler = async (e) => {
         e.preventDefault();
+        setAddNoteLoading(true)
         setAddNoteInfo([])
         const res = await fetch('/api/notes', {
             method: 'POST',
@@ -36,6 +38,7 @@ const AddNote = () => {
         })
         const data = await res.json();
         setMessage(data);
+        setAddNoteLoading(false)
         if (data.status === "success") {
             setTimeout(() => {
                 setFadeOutAni("fadeOut");
@@ -128,9 +131,10 @@ const AddNote = () => {
 
                         <button
                             type="submit"
+                            disabled={addNoteLoading}
                             onClick={addNoteHandler}
-                            className="bg-primary py-3 mb-4 md:mb-0  text-white rounded-xl hover:shadow-button hover:transition-shadow duration-500 hover:duration-300">
-                            Add
+                            className="bg-primary py-3 mb-4 md:mb-0 flex items-center gap-x-2 justify-center text-white rounded-xl hover:shadow-button hover:transition-shadow duration-500 hover:duration-300">
+                            Add {addNoteLoading && <span className="loader"></span>}
                         </button>
                     </form>
                 </div>

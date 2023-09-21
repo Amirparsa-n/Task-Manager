@@ -19,6 +19,8 @@ const AddTask = () => {
         rating: "low",
         date: "",
     });
+    const [addTaskLoading, setAddTaskLoading] = useState(false)
+
 
     const forms = [
         { id: 0, label: "Title *", name: "title", type: "text" },
@@ -42,6 +44,7 @@ const AddTask = () => {
 
     const addTaskHandler = async (e) => {
         e.preventDefault();
+        setAddTaskLoading(true);
         setAddTaskInfo([]);
         const res = await fetch("/api/tasks", {
             method: "POST",
@@ -50,7 +53,7 @@ const AddTask = () => {
         });
         const data = await res.json();
         setMessage(data);
-
+        setAddTaskLoading(false);
         if (data.status === "success") {
             setTimeout(() => {
                 setFadeOutAni("fadeOut");
@@ -137,9 +140,10 @@ const AddTask = () => {
 
                         <button
                             type="submit"
+                            disabled={addTaskLoading}
                             onClick={addTaskHandler}
-                            className="bg-primary py-3 text-white rounded-xl mb-4 md:mb-0 hover:shadow-button hover:transition-shadow duration-500 hover:duration-300">
-                            Add
+                            className="bg-primary py-3 text-white flex items-center gap-x-2 justify-center rounded-xl mb-4 md:mb-0 hover:shadow-button hover:transition-shadow duration-500 hover:duration-300">
+                            Add {addTaskLoading && <span className="loader"></span>}
                         </button>
                     </form>
                 </div>
