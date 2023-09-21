@@ -18,7 +18,18 @@ const Layout = ({ children }) => {
     const { activeMenu, showAddTaskModal, showAddNoteModal, showAddProjectModal, showAddTaskProjectModal } = useContext(stateContext);
 
     const { data: session, status } = useSession();
-    const {theme} = useTheme();
+    const {theme, setTheme} = useTheme();
+
+    useEffect(() => {
+        const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+        if (prefersDarkMode) {
+            setTheme('dark');
+        } else {
+            setTheme('light');
+        }
+    }, []);
+    
 
     if (status === "loading") {
         return (
