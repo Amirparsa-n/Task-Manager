@@ -10,8 +10,8 @@ const SignInPage = () => {
 
     const router = useRouter()
 
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const [message, setMessage] = useState("");
     const [signUpLoading, setSignUpLoading] = useState(false)
@@ -39,7 +39,7 @@ const SignInPage = () => {
     return (
         <div className="container h-screen w-screen flex items-center justify-center -mt-6 md:mt-0">
             <div className="dark:bg-DarkSecond flex flex-row sm:justify-center items-center md:gap-x-2 lg:gap-x-7 justify-between w-full lg:w-10/12 xl:w-9/12 p-0 rounded-3xl shadow-gray-300/70 dark:shadow-none shadow-simple">
-                <div className="md:w-1/2 p-8">
+                <div className="md:w-1/2 w-full p-8">
                     <div className="flex items-center gap-x-2">
                         <Image
                             src={"/assets/images/logo.png"}
