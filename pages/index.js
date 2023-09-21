@@ -1,4 +1,5 @@
 import TaskContainer from "@/components/dndTask/TaskContainer";
+import SpinnerPage from "@/components/element/SpinnerPage";
 import Navbar from "@/components/module/Navbar";
 import { stateContext } from "@/contexts/ContextProvide";
 import connectDB from "@/utils/connectDB";
@@ -11,7 +12,8 @@ import toast from "react-hot-toast";
 export default function Home({ user }) {
     const { addTaskInfo } = useContext(stateContext);
     const [tasks, setTasks] = useState([]);
-
+    const [isLoading, setIsLoading] = useState("");
+    console.log(tasks);
     const router = useRouter();
 
     const { theme } = useTheme();
@@ -23,8 +25,8 @@ export default function Home({ user }) {
     const fetchTodos = async () => {
         const res = await fetch("/api/tasks");
         const data = await res.json();
-        console.log(data.data);
         setTasks(data.data);
+        setIsLoading(data.status)
     };
 
     const UpdateStatus = async (id, status) => {
@@ -38,7 +40,7 @@ export default function Home({ user }) {
             if (theme === "light") {
                 toast.error(data.message);
             } else {
-                toast.error(data.message, {
+                -toast.error(data.message, {
                     style: {
                         background: "#2e2e2e",
                         color: "#fff",
@@ -120,7 +122,17 @@ export default function Home({ user }) {
     return (
         <>
             <Navbar title="My Task" />
-            <TaskContainer tasks={tasks} setTasks={setTasks} UpdateStatus={UpdateStatus} updateTask={updateTask} deleteTask={deleteTask} />
+            {isLoading ? (
+                <TaskContainer
+                    tasks={tasks}
+                    setTasks={setTasks}
+                    UpdateStatus={UpdateStatus}
+                    updateTask={updateTask}
+                    deleteTask={deleteTask}
+                />
+            ) : (
+                <SpinnerPage />
+            )}
         </>
     );
 }
@@ -136,7 +148,7 @@ export async function getServerSideProps({ req }) {
             },
         };
     }
-    await connectDB()
+    await connectDB();
 
     return {
         props: { user: session.user },

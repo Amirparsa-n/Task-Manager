@@ -1,4 +1,5 @@
 import TaskContainer from "@/components/dndTask/TaskContainer";
+import SpinnerPage from "@/components/element/SpinnerPage";
 import Navbar from "@/components/module/Navbar";
 import { stateContext } from "@/contexts/ContextProvide";
 import User from "@/models/User";
@@ -11,7 +12,8 @@ import toast from "react-hot-toast";
 const ProjectItem = ({ projectName }) => {
     const { addTaskInfo, addTaskProjectInfo } = useContext(stateContext);
     const [tasks, setTasks] = useState([]);
-
+    const [isLoading, setIsLoading] = useState("");
+    console.log(tasks);
     const router = useRouter();
 
     const { theme } = useTheme();
@@ -21,10 +23,11 @@ const ProjectItem = ({ projectName }) => {
     }, [addTaskInfo, router.asPath, addTaskProjectInfo]);
 
     const fetchTodos = async () => {
+        setIsLoading("")
         const res = await fetch(`/api/project/${projectName}`);
         const data = await res.json();
-        console.log(data.data);
         setTasks(data.data);
+        setIsLoading(data.status)
     };
 
     const UpdateStatus = async (id, status) => {
@@ -122,13 +125,17 @@ const ProjectItem = ({ projectName }) => {
     return (
         <>
             <Navbar title={projectName} />
-            <TaskContainer
-                tasks={tasks}
-                setTasks={setTasks}
-                UpdateStatus={UpdateStatus}
-                updateTask={updateTask}
-                deleteTask={deleteTask}
-            />
+            {isLoading ? (
+                <TaskContainer
+                    tasks={tasks}
+                    setTasks={setTasks}
+                    UpdateStatus={UpdateStatus}
+                    updateTask={updateTask}
+                    deleteTask={deleteTask}
+                />
+            ) : (
+                <SpinnerPage />
+            )}
         </>
     );
 };
@@ -138,7 +145,7 @@ export default ProjectItem;
 export async function getServerSideProps(context) {
     const { projectId } = context.params;
 
-    await connectDB()
+    await connectDB();
 
     const filteredProjects = await User.find(
         {

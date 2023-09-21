@@ -59,7 +59,7 @@ export default async function handler(req, res) {
 
         res.status(201).json({ status: "success", message: "Todo created!" });
     } else if (req.method === "GET") {
-        res.status(200).json({ data: user.todos });
+        res.status(200).json({ status: 'success',data: user.todos });
     } else if (req.method === "PATCH") {
         const { error, value } = editSchema.validate(req.body);
 

@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 // Components
 import Sidebar from "../module/Sidebar";
 import Navbar from "../module/Navbar";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider, useTheme } from "next-themes";
 import AddTask from "../template/AddTask";
 import AddNote from "../template/AddNote";
 import AddProject from "../template/AddProject";
@@ -18,6 +18,7 @@ const Layout = ({ children }) => {
     const { activeMenu, showAddTaskModal, showAddNoteModal, showAddProjectModal, showAddTaskProjectModal } = useContext(stateContext);
 
     const { data: session, status } = useSession();
+    const {theme} = useTheme();
 
     if (status === "loading") {
         return (

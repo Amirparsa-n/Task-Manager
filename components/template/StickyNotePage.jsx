@@ -9,13 +9,13 @@ import { stateContext } from "@/contexts/ContextProvide";
 // components
 import StickyNoteItem from "../module/StickyNoteItem";
 import toast, { Toaster } from "react-hot-toast";
+import SpinnerPage from "../element/SpinnerPage";
 
 const StickyNotePage = () => {
     const { setShowAddNoteModal, addNoteInfo } = useContext(stateContext);
     const { theme } = useTheme();
     const [noteData, setNoteData] = useState([]);
     const [noteEditStatus, setNoteEditStatus] = useState("");
-
     useEffect(() => {
         fetchStickyNote();
     }, [addNoteInfo]);
@@ -23,7 +23,7 @@ const StickyNotePage = () => {
     const fetchStickyNote = async () => {
         const res = await fetch("/api/notes");
         const data = await res.json();
-        setNoteData(data.data);
+        setNoteData(data);
     };
 
     async function updateStickyNote(id, { title, text }) {
@@ -90,12 +90,14 @@ const StickyNotePage = () => {
             }
         }
     }
-
+    console.log(noteData);
+    
+    if (!noteData.status) return <SpinnerPage />;
     return (
         <>
             <div className="px-4 mt-6 md:mt-10 ">
                 <div className="grid grid-cols-12 gap-y-8 gap-x-6">
-                    {noteData.map((note) => (
+                    {noteData.data.map((note) => (
                         <StickyNoteItem
                             key={note._id}
                             title={note.title}

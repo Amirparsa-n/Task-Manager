@@ -297,11 +297,11 @@
     height: 4px;
 }
 
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
     background-color: #ebebeb;
     -webkit-border-radius: 10px;
     border-radius: 10px;
-}
+} */
 
 ::-webkit-scrollbar-thumb {
     -webkit-border-radius: 10px;
@@ -656,4 +656,26 @@
 
 .projectItem:hover .BoxIcon {
     fill: #fff;
+}
+
+
+.loaderPage {
+    width: 74px;
+    height: 74px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 3px solid #3E7BFA;
+    border-right: 3px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

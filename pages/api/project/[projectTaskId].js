@@ -101,7 +101,7 @@ export default async function handler(req, res) {
             });
         }
     } else if (req.method === "GET") {
-        res.status(200).json({ data: project.todos });
+        res.status(200).json({ status:'success', data: project.todos });
     } else if (req.method === "PATCH") {
         const { error, value } = editSchema.validate(req.body);
 
