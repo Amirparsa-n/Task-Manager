@@ -5,8 +5,8 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { useTheme } from "next-themes";
 
 // components
-import SidebarItem from "../element/SidebarItem";
-import SidebarProjectItem from "../element/sidebarProjectItem";
+import SidebarItem from "@/components/element/SidebarItem";
+import SidebarProjectItem from "@/components/element/SidebarProjectItem";
 
 // context
 import { stateContext } from "@/contexts/ContextProvide";
