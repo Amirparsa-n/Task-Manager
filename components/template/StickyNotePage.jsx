@@ -90,7 +90,6 @@ const StickyNotePage = () => {
             }
         }
     }
-    console.log(noteData);
     
     if (!noteData.status) return <SpinnerPage />;
     return (

@@ -167,7 +167,6 @@ function TaskContainer({ tasks, setTasks, UpdateStatus, updateTask, deleteTask }
         const isActiveAColumn = active.data.current?.type === "Column";
         if (!isActiveAColumn) return;
 
-        console.log("DRAG END");
 
         setColumns((columns) => {
             const activeColumnIndex = columns.findIndex(
@@ -177,7 +176,6 @@ function TaskContainer({ tasks, setTasks, UpdateStatus, updateTask, deleteTask }
             const overColumnIndex = columns.findIndex(
                 (col) => col.id === overId
             );
-            console.log("dreg ending column");
             return arrayMove(columns, activeColumnIndex, overColumnIndex);
         });
     }
@@ -222,7 +220,7 @@ function TaskContainer({ tasks, setTasks, UpdateStatus, updateTask, deleteTask }
             setTasks((tasks) => {
                 const activeIndex = tasks.findIndex((t) => t._id === activeId);
                 tasks[activeIndex].status = overId;
-                console.log("DROPPING TASK OVER COLUMN", { activeIndex });
+                console.log("DROPPING TASK OVER COLUMN");
                 changeStatus(tasks[activeIndex]._id, tasks[activeIndex].status);
                 return arrayMove(tasks, activeIndex, activeIndex);
             });

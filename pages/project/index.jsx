@@ -6,7 +6,6 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import User from "@/models/User";
 
 const Project = ({ projectsNames }) => {
-    
     return (
         <>
             <Navbar title="Project" />
@@ -18,25 +17,20 @@ const Project = ({ projectsNames }) => {
 export default Project;
 
 export async function getServerSideProps({ req, res }) {
-    try {
-        await connectDB();
-    } catch (err) {
-        console.log(err);
-        return res
-            .status(500)
-            .json({ status: "failed", message: "Error in connecting to DB" });
-    }
+    await connectDB();
 
     const session = await getServerSession(req, res, authOptions);
     const user = await User.findOne({ email: session.user.email });
 
     let projectsNames = [];
     for (let i = 0; i < user.project.length; i++) {
-        projectsNames.push({ id:user.project[i].id ,name: user.project[i].name });
+        projectsNames.push({
+            id: user.project[i].id,
+            name: user.project[i].name,
+        });
     }
-    
-    
+
     return {
-        props: {projectsNames}
-    }
+        props: { projectsNames },
+    };
 }

@@ -13,7 +13,6 @@ export default function Home({ user }) {
     const { addTaskInfo } = useContext(stateContext);
     const [tasks, setTasks] = useState([]);
     const [isLoading, setIsLoading] = useState("");
-    console.log(tasks);
     const router = useRouter();
 
     const { theme } = useTheme();
@@ -51,7 +50,6 @@ export default function Home({ user }) {
                 router.reload();
             }, 600);
         }
-        console.log(data);
     };
 
     async function updateTask(id, { title, description }) {
@@ -116,7 +114,6 @@ export default function Home({ user }) {
                 });
             }
         }
-        console.log(data);
     }
 
     return (

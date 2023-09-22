@@ -55,7 +55,12 @@ const BottomNavigation = () => {
                         <span className="text-[12px] mt-2 dark:text-gray-300">
                             Project
                         </span>
-                        {pathname === "/project" || query.projectId  && (
+                        {query.projectId  && (
+                            <div className="absolute bottom-0 with-shadow">
+                                <SelectShapeBottomNav />
+                            </div>
+                        )}
+                        {pathname === "/project" && (
                             <div className="absolute bottom-0 with-shadow">
                                 <SelectShapeBottomNav />
                             </div>

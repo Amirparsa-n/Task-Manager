@@ -76,7 +76,6 @@ const ProfilePage = ({ data }) => {
                 });
             }
         }
-        console.log(data);
         setIsLoading(false);
     };
 
